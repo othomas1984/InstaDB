@@ -12,6 +12,7 @@
 		33A380F221277DCB00EFB043 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33A380F021277DCB00EFB043 /* Main.storyboard */; };
 		33A380F421277DCC00EFB043 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33A380F321277DCC00EFB043 /* Assets.xcassets */; };
 		33A380F721277DCC00EFB043 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33A380F521277DCC00EFB043 /* LaunchScreen.storyboard */; };
+		F0666C303BB8B13D6B5D7CB1 /* libPods-InstaDB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EE9ACD732C3C84ABDC39C74 /* libPods-InstaDB.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,9 @@
 		33A380F321277DCC00EFB043 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		33A380F621277DCC00EFB043 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		33A380F821277DCC00EFB043 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3EE9ACD732C3C84ABDC39C74 /* libPods-InstaDB.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-InstaDB.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6300ECEF02D7DB68E51BB90C /* Pods-InstaDB.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstaDB.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InstaDB/Pods-InstaDB.debug.xcconfig"; sourceTree = "<group>"; };
+		C6E44B93D08155D20349FB61 /* Pods-InstaDB.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstaDB.release.xcconfig"; path = "Pods/Target Support Files/Pods-InstaDB/Pods-InstaDB.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +33,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0666C303BB8B13D6B5D7CB1 /* libPods-InstaDB.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2146401D4B248C805A02FA8B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3EE9ACD732C3C84ABDC39C74 /* libPods-InstaDB.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		33A380E021277DCB00EFB043 = {
 			isa = PBXGroup;
 			children = (
 				33A380EB21277DCB00EFB043 /* InstaDB */,
 				33A380EA21277DCB00EFB043 /* Products */,
+				4FA91B18C97147BE5B97876C /* Pods */,
+				2146401D4B248C805A02FA8B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -64,6 +79,15 @@
 			path = InstaDB;
 			sourceTree = "<group>";
 		};
+		4FA91B18C97147BE5B97876C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				6300ECEF02D7DB68E51BB90C /* Pods-InstaDB.debug.xcconfig */,
+				C6E44B93D08155D20349FB61 /* Pods-InstaDB.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -71,6 +95,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 33A380FB21277DCC00EFB043 /* Build configuration list for PBXNativeTarget "InstaDB" */;
 			buildPhases = (
+				78ADFEA2822F3B432FC84BC3 /* [CP] Check Pods Manifest.lock */,
 				33A380E521277DCB00EFB043 /* Sources */,
 				33A380E621277DCB00EFB043 /* Frameworks */,
 				33A380E721277DCB00EFB043 /* Resources */,
@@ -129,6 +154,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		78ADFEA2822F3B432FC84BC3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-InstaDB-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		33A380E521277DCB00EFB043 /* Sources */ = {
@@ -278,6 +324,7 @@
 		};
 		33A380FC21277DCC00EFB043 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6300ECEF02D7DB68E51BB90C /* Pods-InstaDB.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -296,6 +343,7 @@
 		};
 		33A380FD21277DCC00EFB043 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C6E44B93D08155D20349FB61 /* Pods-InstaDB.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
