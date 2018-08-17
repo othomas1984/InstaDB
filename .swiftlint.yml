@@ -1,0 +1,51 @@
+disabled_rules: # rule identifiers to exclude from running
+  - trailing_whitespace
+  - trailing_comma
+  - todo
+opt_in_rules: # some rules are only opt-in
+  - empty_count
+  - closure_end_indentation
+  - closure_spacing
+  - empty_string
+  - fatal_error_message
+  - first_where
+  - force_unwrapping
+  - implicit_return
+  - literal_expression_end_indentation
+  - object_literal
+  - operator_usage_whitespace
+  - overridden_super_call
+  - prohibited_super_call
+  - sorted_imports
+  - strict_fileprivate
+  - switch_case_on_newline
+  - trailing_closure
+  - unavailable_function
+  - unneeded_parentheses_in_closure_argument
+  - yoda_condition
+excluded: # paths to ignore during linting. Takes precedence over `included`.
+  - Pods
+
+force_cast: warning
+force_try: warning
+line_length: 140
+type_body_length:
+  warning: 200
+  error: 400
+file_length:
+  warning: 300
+  error: 500
+type_name:
+  min_length: 4
+  max_length:
+    warning: 30
+    error: 50
+identifier_name:
+  min_length:
+    warning: 4 
+  excluded:
+    - id
+    - ac
+    - url
+reporter: "xcode" # reporter type (xcode, json, csv, checkstyle, junit, html, emoji)
+

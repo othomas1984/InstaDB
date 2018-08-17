@@ -72,11 +72,19 @@
 				33A380EC21277DCB00EFB043 /* AppDelegate.swift */,
 				33A380EE21277DCB00EFB043 /* ViewController.swift */,
 				33A380F021277DCB00EFB043 /* Main.storyboard */,
-				33A380F321277DCC00EFB043 /* Assets.xcassets */,
-				33A380F521277DCC00EFB043 /* LaunchScreen.storyboard */,
-				33A380F821277DCC00EFB043 /* Info.plist */,
+				33A380FE2127812B00EFB043 /* Support Files */,
 			);
 			path = InstaDB;
+			sourceTree = "<group>";
+		};
+		33A380FE2127812B00EFB043 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				33A380F521277DCC00EFB043 /* LaunchScreen.storyboard */,
+				33A380F321277DCC00EFB043 /* Assets.xcassets */,
+				33A380F821277DCC00EFB043 /* Info.plist */,
+			);
+			name = "Support Files";
 			sourceTree = "<group>";
 		};
 		4FA91B18C97147BE5B97876C /* Pods */ = {
@@ -99,6 +107,7 @@
 				33A380E521277DCB00EFB043 /* Sources */,
 				33A380E621277DCB00EFB043 /* Frameworks */,
 				33A380E721277DCB00EFB043 /* Resources */,
+				336638A92127820E00FC141A /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -156,6 +165,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		336638A92127820E00FC141A /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"";
+		};
 		78ADFEA2822F3B432FC84BC3 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
