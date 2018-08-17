@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyDropbox
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,21 +16,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(_ application: UIApplication,
                    didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    setupDropbox()
     return true
   }
 
-  func applicationWillResignActive(_ application: UIApplication) {
+  // swiftlint:disable:next identifier_name
+  func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey: Any] = [:]) -> Bool {
+    handleDropboxCallback(url)
+    return true
   }
 
-  func applicationDidEnterBackground(_ application: UIApplication) {
+  private func setupDropbox() {
+    DropboxClientsManager.setupWithAppKey("kv804kipmgbpxnx")
   }
-
-  func applicationWillEnterForeground(_ application: UIApplication) {
-  }
-
-  func applicationDidBecomeActive(_ application: UIApplication) {
-  }
-
-  func applicationWillTerminate(_ application: UIApplication) {
+  
+  private func handleDropboxCallback(_ url: URL) {
+    guard let result = DropboxClientsManager.handleRedirectURL(url) else { return }
+    switch result {
+    case .success:
+      print("Success! User is logged into Dropbox.")
+    case .cancel:
+      print("Authorization flow was manually canceled by user!")
+    case .error(_, let description):
+      print("Error: \(description)")
+    }
   }
 }
