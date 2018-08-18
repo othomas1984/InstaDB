@@ -82,6 +82,21 @@ class FileService {
     }
   }
   
+  func upload(_ data: Data, toPath path: String, progressHandler: ((Double) -> Void)? = nil, completion: @escaping (String?) -> Void) {
+    // TODO: Return the UploadRequest so it can be cancelled if necessary
+    let _ = client?.files.upload(path: path, input: data)
+      .response { response, error in
+        if let error = error {
+          completion(error.errorDescription)
+          return
+        }
+        completion(nil)
+      }
+    .progress { progressData in
+      progressHandler?(progressData.fractionCompleted)
+    }
+  }
+  
   func fetchThumbnail(atPath path: String, progressHandler: ((Double) -> Void)? = nil, completion: @escaping (Data?, String?) -> Void) {
     if let file = FileService.fetchedThumbnails[path] {
       completion(file, nil)
