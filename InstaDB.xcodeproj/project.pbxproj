@@ -13,7 +13,12 @@
 		336638B62127A1FE00FC141A /* FileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336638B52127A1FE00FC141A /* FileService.swift */; };
 		336638B92127A58600FC141A /* NotificationNameExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336638B82127A58600FC141A /* NotificationNameExtension.swift */; };
 		336638BB2127B28900FC141A /* ViewModelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336638BA2127B28900FC141A /* ViewModelDelegate.swift */; };
+		336638BE21289F3B00FC141A /* ImageCollection.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 336638BD21289F3B00FC141A /* ImageCollection.storyboard */; };
+		336638C021289FD400FC141A /* ImageCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336638BF21289FD400FC141A /* ImageCollectionViewController.swift */; };
+		336638C22128A08800FC141A /* ImageCollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336638C12128A08800FC141A /* ImageCollectionViewModel.swift */; };
 		336638C42128A5B800FC141A /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336638C32128A5B800FC141A /* Image.swift */; };
+		336638C62128AA6300FC141A /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336638C52128AA6300FC141A /* ImageCollectionViewCell.swift */; };
+		336638C82128AA7D00FC141A /* ImageCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336638C72128AA7D00FC141A /* ImageCellViewModel.swift */; };
 		336638CA2128B29700FC141A /* CallErrorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336638C92128B29700FC141A /* CallErrorExtension.swift */; };
 		33A380ED21277DCB00EFB043 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A380EC21277DCB00EFB043 /* AppDelegate.swift */; };
 		33A380EF21277DCB00EFB043 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A380EE21277DCB00EFB043 /* ViewController.swift */; };
@@ -30,7 +35,12 @@
 		336638B52127A1FE00FC141A /* FileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileService.swift; sourceTree = "<group>"; };
 		336638B82127A58600FC141A /* NotificationNameExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNameExtension.swift; sourceTree = "<group>"; };
 		336638BA2127B28900FC141A /* ViewModelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelDelegate.swift; sourceTree = "<group>"; };
+		336638BD21289F3B00FC141A /* ImageCollection.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ImageCollection.storyboard; sourceTree = "<group>"; };
+		336638BF21289FD400FC141A /* ImageCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewController.swift; sourceTree = "<group>"; };
+		336638C12128A08800FC141A /* ImageCollectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewModel.swift; sourceTree = "<group>"; };
 		336638C32128A5B800FC141A /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		336638C52128AA6300FC141A /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		336638C72128AA7D00FC141A /* ImageCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCellViewModel.swift; sourceTree = "<group>"; };
 		336638C92128B29700FC141A /* CallErrorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallErrorExtension.swift; sourceTree = "<group>"; };
 		33A380E921277DCB00EFB043 /* InstaDB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InstaDB.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		33A380EC21277DCB00EFB043 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -77,6 +87,7 @@
 			children = (
 				336638BA2127B28900FC141A /* ViewModelDelegate.swift */,
 				336638AD2127983F00FC141A /* Landing */,
+				336638BC21289F2500FC141A /* ImageCollection */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -106,6 +117,18 @@
 				336638C92128B29700FC141A /* CallErrorExtension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		336638BC21289F2500FC141A /* ImageCollection */ = {
+			isa = PBXGroup;
+			children = (
+				336638C12128A08800FC141A /* ImageCollectionViewModel.swift */,
+				336638C72128AA7D00FC141A /* ImageCellViewModel.swift */,
+				336638BF21289FD400FC141A /* ImageCollectionViewController.swift */,
+				336638C52128AA6300FC141A /* ImageCollectionViewCell.swift */,
+				336638BD21289F3B00FC141A /* ImageCollection.storyboard */,
+			);
+			path = ImageCollection;
 			sourceTree = "<group>";
 		};
 		33A380E021277DCB00EFB043 = {
@@ -222,6 +245,7 @@
 			files = (
 				33A380F721277DCC00EFB043 /* LaunchScreen.storyboard in Resources */,
 				33A380F421277DCC00EFB043 /* Assets.xcassets in Resources */,
+				336638BE21289F3B00FC141A /* ImageCollection.storyboard in Resources */,
 				336638B32127987500FC141A /* Landing.storyboard in Resources */,
 				33A380F221277DCB00EFB043 /* Main.storyboard in Resources */,
 			);
@@ -271,9 +295,13 @@
 			files = (
 				33A380EF21277DCB00EFB043 /* ViewController.swift in Sources */,
 				336638CA2128B29700FC141A /* CallErrorExtension.swift in Sources */,
+				336638C62128AA6300FC141A /* ImageCollectionViewCell.swift in Sources */,
+				336638C82128AA7D00FC141A /* ImageCellViewModel.swift in Sources */,
 				336638AF2127986500FC141A /* LandingViewModel.swift in Sources */,
 				336638B12127986F00FC141A /* LandingViewController.swift in Sources */,
+				336638C22128A08800FC141A /* ImageCollectionViewModel.swift in Sources */,
 				336638BB2127B28900FC141A /* ViewModelDelegate.swift in Sources */,
+				336638C021289FD400FC141A /* ImageCollectionViewController.swift in Sources */,
 				336638B92127A58600FC141A /* NotificationNameExtension.swift in Sources */,
 				336638B62127A1FE00FC141A /* FileService.swift in Sources */,
 				33A380ED21277DCB00EFB043 /* AppDelegate.swift in Sources */,
