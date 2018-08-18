@@ -25,17 +25,7 @@ class FileService {
     return DropboxClientsManager.authorizedClient
   }
   
-  @objc private func authSuccess() {
-    notifyListeners()
-  }
-  
-  @objc private func authCancel() {
-    signOut()
-  }
-  
-  @objc private func authError(_ notification: Notification) {
-    signOut()
-  }
+  static var fetchedFiles = [String: Data]()
   
   init() {
     listenForAuthChanges()
@@ -61,10 +51,76 @@ class FileService {
     authChangeHandles[handle] = nil
   }
   
+  func fetchFileList(path: String, completion: @escaping ([Image], String?) -> Void) {
+    client?.files.listFolder(path: path).response { result, error in
+      if let error = error {
+        completion([], error.errorDescription)
+        return
+      }
+      guard let result = result else { return }
+      let images = result.entries.map { Image(name: $0.name, path: $0.pathLower) }
+      completion(images, nil)
+    }
+  }
+  
+  func fetchFile(atPath path: String, completion: @escaping (Data, String?) -> Void) {
+    if let file = FileService.fetchedFiles[path] {
+      completion(file, nil)
+      return
+    }
+    client?.files.download(path: path).response { response, error in
+      if let response = response {
+        let responseMetadata = response.0
+        print(responseMetadata)
+        let fileContents = response.1
+        FileService.fetchedFiles[path] = fileContents
+        completion(fileContents, nil)
+      } else if let error = error {
+        print(error)
+      }
+    }
+    .progress { progressData in
+      print(progressData)
+    }
+  }
+  
+  func fetchThumbnail(atPath path: String, progressHandler: ((Double) -> Void)? = nil, completion: @escaping (Data, String?) -> Void) {
+    if let file = FileService.fetchedFiles[path] {
+      completion(file, nil)
+      return
+    }
+    client?.files.getThumbnail(path: path, format: .png, size: .w256h256, mode: .fitoneBestfit).response { response, error in
+      if let response = response {
+        let responseMetadata = response.0
+        print(responseMetadata)
+        let fileContents = response.1
+        FileService.fetchedFiles[path] = fileContents
+        completion(fileContents, nil)
+      } else if let error = error {
+        print(error)
+      }
+    }
+    .progress { progressData in
+      progressHandler?(progressData.fractionCompleted)
+    }
+  }
+  
   private func listenForAuthChanges() {
     NotificationCenter.default.addObserver(self, selector: #selector(authSuccess), name: .dropboxAuthSuccess, object: nil)
     NotificationCenter.default.addObserver(self, selector: #selector(authCancel), name: .dropboxAuthCancel, object: nil)
     NotificationCenter.default.addObserver(self, selector: #selector(authError(_:)), name: .dropboxAuthError, object: nil)
+  }
+  
+  @objc private func authSuccess() {
+    notifyListeners()
+  }
+  
+  @objc private func authCancel() {
+    signOut()
+  }
+  
+  @objc private func authError(_ notification: Notification) {
+    signOut()
   }
   
   private func notifyListeners() {
