@@ -16,6 +16,7 @@ class ImageCollectionViewModel {
     images = Observable.create { observer in
       fileService.fetchFileList(path: "") { images, errorDescription in
         if let error = errorDescription {
+          // TODO: Show error to user and allow a retry
           print(error)
           return
         }
