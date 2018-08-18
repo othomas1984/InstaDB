@@ -34,11 +34,14 @@ class LandingViewController: UIViewController {
       case .authenticated = state else { return }
       self.spinner.startAnimating()
       Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { _ in
-        guard let mainVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateInitialViewController(),
+        guard let navVC = UIStoryboard.init(name: "ImageCollection", bundle: nil)
+          .instantiateInitialViewController() as? UINavigationController,
+          let imageCollectionVC = navVC.childViewControllers.first as? ImageCollectionViewController,
           let window = UIApplication.shared.keyWindow else { return }
         self.spinner.stopAnimating()
+        imageCollectionVC.model = ImageCollectionViewModel()
         UIView.transition(with: window, duration: 0.5, options: [.transitionFlipFromLeft], animations: {
-          window.rootViewController = mainVC
+          window.rootViewController = navVC
         }, completion: nil)
       }
     }.disposed(by: disposeBag)
