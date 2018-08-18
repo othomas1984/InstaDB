@@ -26,7 +26,8 @@ class FileService {
   }
   
   static var fetchedFiles = [String: Data]()
-  
+  static var fetchedThumbnails = [String: Data]()
+
   init() {
     listenForAuthChanges()
   }
@@ -57,48 +58,43 @@ class FileService {
         completion([], error.errorDescription)
         return
       }
-      guard let result = result else { return }
-      let images = result.entries.map { Image(name: $0.name, path: $0.pathLower) }
+      let images = result?.entries.map { Image(name: $0.name, path: $0.pathLower) } ?? []
       completion(images, nil)
     }
   }
   
-  func fetchFile(atPath path: String, completion: @escaping (Data, String?) -> Void) {
+  func fetchFile(atPath path: String, progressHandler: ((Double) -> Void)? = nil, completion: @escaping (Data?, String?) -> Void) {
     if let file = FileService.fetchedFiles[path] {
       completion(file, nil)
       return
     }
     client?.files.download(path: path).response { response, error in
-      if let response = response {
-        let responseMetadata = response.0
-        print(responseMetadata)
-        let fileContents = response.1
-        FileService.fetchedFiles[path] = fileContents
-        completion(fileContents, nil)
-      } else if let error = error {
-        print(error)
+      if let error = error {
+        completion(nil, error.errorDescription)
+        return
       }
+      let data = response?.1
+      FileService.fetchedFiles[path] = data
+      completion(data, nil)
     }
     .progress { progressData in
-      print(progressData)
+      progressHandler?(progressData.fractionCompleted)
     }
   }
   
-  func fetchThumbnail(atPath path: String, progressHandler: ((Double) -> Void)? = nil, completion: @escaping (Data, String?) -> Void) {
-    if let file = FileService.fetchedFiles[path] {
+  func fetchThumbnail(atPath path: String, progressHandler: ((Double) -> Void)? = nil, completion: @escaping (Data?, String?) -> Void) {
+    if let file = FileService.fetchedThumbnails[path] {
       completion(file, nil)
       return
     }
     client?.files.getThumbnail(path: path, format: .png, size: .w256h256, mode: .fitoneBestfit).response { response, error in
-      if let response = response {
-        let responseMetadata = response.0
-        print(responseMetadata)
-        let fileContents = response.1
-        FileService.fetchedFiles[path] = fileContents
-        completion(fileContents, nil)
-      } else if let error = error {
-        print(error)
+      if let error = error {
+        completion(nil, error.errorDescription)
+        return
       }
+      let data = response?.1
+      FileService.fetchedThumbnails[path] = data
+      completion(data, nil)
     }
     .progress { progressData in
       progressHandler?(progressData.fractionCompleted)
