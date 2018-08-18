@@ -1,11 +1,14 @@
 PODS:
   - Alamofire (4.5.1)
+  - RxCocoa (4.2.0):
+    - RxSwift (~> 4.0)
   - RxSwift (4.2.0)
   - SwiftLint (0.26.0)
   - SwiftyDropbox (4.6.0):
     - Alamofire (~> 4.5.0)
 
 DEPENDENCIES:
+  - RxCocoa (~> 4.2.0)
   - RxSwift (~> 4.2.0)
   - SwiftLint (~> 0.26.0)
   - SwiftyDropbox (~> 4.6.0)
@@ -13,16 +16,18 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
+    - RxCocoa
     - RxSwift
     - SwiftLint
     - SwiftyDropbox
 
 SPEC CHECKSUMS:
   Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
+  RxCocoa: 0b54909c902e1e581212a03e690bbd94032d8baa
   RxSwift: 99e10317ddfcc7fbe01356aafd118fde4a0be104
   SwiftLint: f6b83e8d95ee1e91e11932d843af4fdcbf3fc764
   SwiftyDropbox: 8af645e744de6f17b4e9fdeba21365b8dc55a542
 
-PODFILE CHECKSUM: fd659e3dece46c231e9165e8e4e16928502b704f
+PODFILE CHECKSUM: 260cd2a70def12897383ddac6361181d06660392
 
 COCOAPODS: 1.5.3
