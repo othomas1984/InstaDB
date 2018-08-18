@@ -13,6 +13,6 @@ enum ViewModelAction {
   case show(type: String?, id: String?)
 }
 
-protocol ViewModelDelegate {
+protocol ViewModelDelegate: class {
   func send(_ action: ViewModelAction)
 }
