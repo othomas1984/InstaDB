@@ -13,6 +13,7 @@
 		336638B62127A1FE00FC141A /* FileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336638B52127A1FE00FC141A /* FileService.swift */; };
 		336638B92127A58600FC141A /* NotificationNameExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336638B82127A58600FC141A /* NotificationNameExtension.swift */; };
 		336638BB2127B28900FC141A /* ViewModelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336638BA2127B28900FC141A /* ViewModelDelegate.swift */; };
+		336638C42128A5B800FC141A /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336638C32128A5B800FC141A /* Image.swift */; };
 		336638CA2128B29700FC141A /* CallErrorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336638C92128B29700FC141A /* CallErrorExtension.swift */; };
 		33A380ED21277DCB00EFB043 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A380EC21277DCB00EFB043 /* AppDelegate.swift */; };
 		33A380EF21277DCB00EFB043 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A380EE21277DCB00EFB043 /* ViewController.swift */; };
@@ -29,6 +30,7 @@
 		336638B52127A1FE00FC141A /* FileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileService.swift; sourceTree = "<group>"; };
 		336638B82127A58600FC141A /* NotificationNameExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNameExtension.swift; sourceTree = "<group>"; };
 		336638BA2127B28900FC141A /* ViewModelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelDelegate.swift; sourceTree = "<group>"; };
+		336638C32128A5B800FC141A /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		336638C92128B29700FC141A /* CallErrorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallErrorExtension.swift; sourceTree = "<group>"; };
 		33A380E921277DCB00EFB043 /* InstaDB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InstaDB.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		33A380EC21277DCB00EFB043 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -65,6 +67,7 @@
 		336638AA212797EB00FC141A /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				336638C32128A5B800FC141A /* Image.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -274,6 +277,7 @@
 				336638B92127A58600FC141A /* NotificationNameExtension.swift in Sources */,
 				336638B62127A1FE00FC141A /* FileService.swift in Sources */,
 				33A380ED21277DCB00EFB043 /* AppDelegate.swift in Sources */,
+				336638C42128A5B800FC141A /* Image.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
