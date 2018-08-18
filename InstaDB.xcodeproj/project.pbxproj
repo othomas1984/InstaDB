@@ -21,8 +21,6 @@
 		336638C82128AA7D00FC141A /* ImageCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336638C72128AA7D00FC141A /* ImageCellViewModel.swift */; };
 		336638CA2128B29700FC141A /* CallErrorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336638C92128B29700FC141A /* CallErrorExtension.swift */; };
 		33A380ED21277DCB00EFB043 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A380EC21277DCB00EFB043 /* AppDelegate.swift */; };
-		33A380EF21277DCB00EFB043 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A380EE21277DCB00EFB043 /* ViewController.swift */; };
-		33A380F221277DCB00EFB043 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33A380F021277DCB00EFB043 /* Main.storyboard */; };
 		33A380F421277DCC00EFB043 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33A380F321277DCC00EFB043 /* Assets.xcassets */; };
 		33A380F721277DCC00EFB043 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33A380F521277DCC00EFB043 /* LaunchScreen.storyboard */; };
 		F0666C303BB8B13D6B5D7CB1 /* libPods-InstaDB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EE9ACD732C3C84ABDC39C74 /* libPods-InstaDB.a */; };
@@ -44,8 +42,6 @@
 		336638C92128B29700FC141A /* CallErrorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallErrorExtension.swift; sourceTree = "<group>"; };
 		33A380E921277DCB00EFB043 /* InstaDB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InstaDB.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		33A380EC21277DCB00EFB043 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		33A380EE21277DCB00EFB043 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		33A380F121277DCB00EFB043 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		33A380F321277DCC00EFB043 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		33A380F621277DCC00EFB043 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		33A380F821277DCC00EFB043 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -157,8 +153,6 @@
 				336638B42127A1F000FC141A /* Services */,
 				336638AA212797EB00FC141A /* Models */,
 				336638AC2127980300FC141A /* Views */,
-				33A380EE21277DCB00EFB043 /* ViewController.swift */,
-				33A380F021277DCB00EFB043 /* Main.storyboard */,
 				33A380FE2127812B00EFB043 /* Support Files */,
 			);
 			path = InstaDB;
@@ -247,7 +241,6 @@
 				33A380F421277DCC00EFB043 /* Assets.xcassets in Resources */,
 				336638BE21289F3B00FC141A /* ImageCollection.storyboard in Resources */,
 				336638B32127987500FC141A /* Landing.storyboard in Resources */,
-				33A380F221277DCB00EFB043 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -293,7 +286,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				33A380EF21277DCB00EFB043 /* ViewController.swift in Sources */,
 				336638CA2128B29700FC141A /* CallErrorExtension.swift in Sources */,
 				336638C62128AA6300FC141A /* ImageCollectionViewCell.swift in Sources */,
 				336638C82128AA7D00FC141A /* ImageCellViewModel.swift in Sources */,
@@ -312,14 +304,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		33A380F021277DCB00EFB043 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				33A380F121277DCB00EFB043 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		33A380F521277DCC00EFB043 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
