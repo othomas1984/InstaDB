@@ -26,6 +26,9 @@ class ViewController: UIViewController {
     }
   }
   
+  @IBAction func buttonTapped(_ sender: Any) {
+    NotificationCenter.default.post(name: .dropboxAuthCancel, object: nil)
+  }
   private func fetchFileList(_ client: DropboxClient) {
     client.files.listFolder(path: "").response { result, error in
       if let error = error {

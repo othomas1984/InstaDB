@@ -34,11 +34,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     guard let result = DropboxClientsManager.handleRedirectURL(url) else { return }
     switch result {
     case .success:
-      print("Success! User is logged into Dropbox.")
+      NotificationCenter.default.post(name: Notification.Name.dropboxAuthSuccess, object: nil)
     case .cancel:
-      print("Authorization flow was manually canceled by user!")
-    case .error(_, let description):
-      print("Error: \(description)")
+      NotificationCenter.default.post(name: Notification.Name.dropboxAuthCancel, object: nil)
+    case let .error(_, description):
+      NotificationCenter.default.post(name: Notification.Name.dropboxAuthError, object: nil, userInfo: ["description": description])
     }
   }
 }

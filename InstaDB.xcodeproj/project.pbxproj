@@ -10,6 +10,9 @@
 		336638AF2127986500FC141A /* LandingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336638AE2127986500FC141A /* LandingViewModel.swift */; };
 		336638B12127986F00FC141A /* LandingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336638B02127986F00FC141A /* LandingViewController.swift */; };
 		336638B32127987500FC141A /* Landing.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 336638B22127987500FC141A /* Landing.storyboard */; };
+		336638B62127A1FE00FC141A /* FileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336638B52127A1FE00FC141A /* FileService.swift */; };
+		336638B92127A58600FC141A /* NotificationNameExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336638B82127A58600FC141A /* NotificationNameExtension.swift */; };
+		336638BB2127B28900FC141A /* ViewModelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336638BA2127B28900FC141A /* ViewModelDelegate.swift */; };
 		33A380ED21277DCB00EFB043 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A380EC21277DCB00EFB043 /* AppDelegate.swift */; };
 		33A380EF21277DCB00EFB043 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A380EE21277DCB00EFB043 /* ViewController.swift */; };
 		33A380F221277DCB00EFB043 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33A380F021277DCB00EFB043 /* Main.storyboard */; };
@@ -22,6 +25,9 @@
 		336638AE2127986500FC141A /* LandingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingViewModel.swift; sourceTree = "<group>"; };
 		336638B02127986F00FC141A /* LandingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingViewController.swift; sourceTree = "<group>"; };
 		336638B22127987500FC141A /* Landing.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Landing.storyboard; sourceTree = "<group>"; };
+		336638B52127A1FE00FC141A /* FileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileService.swift; sourceTree = "<group>"; };
+		336638B82127A58600FC141A /* NotificationNameExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNameExtension.swift; sourceTree = "<group>"; };
+		336638BA2127B28900FC141A /* ViewModelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelDelegate.swift; sourceTree = "<group>"; };
 		33A380E921277DCB00EFB043 /* InstaDB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InstaDB.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		33A380EC21277DCB00EFB043 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		33A380EE21277DCB00EFB043 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -64,6 +70,7 @@
 		336638AC2127980300FC141A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				336638BA2127B28900FC141A /* ViewModelDelegate.swift */,
 				336638AD2127983F00FC141A /* Landing */,
 			);
 			path = Views;
@@ -77,6 +84,22 @@
 				336638B22127987500FC141A /* Landing.storyboard */,
 			);
 			path = Landing;
+			sourceTree = "<group>";
+		};
+		336638B42127A1F000FC141A /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				336638B52127A1FE00FC141A /* FileService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		336638B72127A57500FC141A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				336638B82127A58600FC141A /* NotificationNameExtension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		33A380E021277DCB00EFB043 = {
@@ -101,6 +124,8 @@
 			isa = PBXGroup;
 			children = (
 				33A380EC21277DCB00EFB043 /* AppDelegate.swift */,
+				336638B72127A57500FC141A /* Extensions */,
+				336638B42127A1F000FC141A /* Services */,
 				336638AA212797EB00FC141A /* Models */,
 				336638AC2127980300FC141A /* Views */,
 				33A380EE21277DCB00EFB043 /* ViewController.swift */,
@@ -241,6 +266,9 @@
 				33A380EF21277DCB00EFB043 /* ViewController.swift in Sources */,
 				336638AF2127986500FC141A /* LandingViewModel.swift in Sources */,
 				336638B12127986F00FC141A /* LandingViewController.swift in Sources */,
+				336638BB2127B28900FC141A /* ViewModelDelegate.swift in Sources */,
+				336638B92127A58600FC141A /* NotificationNameExtension.swift in Sources */,
+				336638B62127A1FE00FC141A /* FileService.swift in Sources */,
 				33A380ED21277DCB00EFB043 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
