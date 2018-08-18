@@ -14,36 +14,32 @@ class LandingViewController: UIViewController {
   var model: LandingViewModel!
   var disposeBag = DisposeBag()
   
-  @IBOutlet weak var dropboxButton: UIButton!
+  @IBOutlet weak var spinner: UIActivityIndicatorView!
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     model = LandingViewModel()
-  }
-  
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
     handleAuthChange()
   }
-
-  @IBAction func dropboxButtonTapped() {
-    attemptDropboxAuth()
-  }
   
-  private func attemptDropboxAuth() {
+  @IBAction func dropboxButtonTapped() {
     DropboxClientsManager.authorizeFromController(UIApplication.shared, controller: self) {
       UIApplication.shared.open($0)
     }
   }
   
   private func handleAuthChange() {
-    model.authenticated.delay(0.2, scheduler: MainScheduler()).subscribe { [unowned self] event in
-      guard case let .next(state) = event else { return }
-      switch state {
-      case .authenticated:
-        guard let mainVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateInitialViewController() else { return }
-        self.present(mainVC, animated: true, completion: nil)
-      case .unauthenticated:
-        self.dismiss(animated: true, completion: nil)
+    model.authenticated.subscribe { [unowned self] event in
+      guard case let .next(state) = event,
+      case .authenticated = state else { return }
+      self.spinner.startAnimating()
+      Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { _ in
+        guard let mainVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateInitialViewController(),
+          let window = UIApplication.shared.keyWindow else { return }
+        self.spinner.stopAnimating()
+        UIView.transition(with: window, duration: 0.5, options: [.transitionFlipFromLeft], animations: {
+          window.rootViewController = mainVC
+        }, completion: nil)
       }
     }.disposed(by: disposeBag)
   }

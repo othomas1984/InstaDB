@@ -35,7 +35,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please login to Dropbox to manage your images" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="azW-dM-E0x">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To manage your images please tap below to login to Dropbox " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="azW-dM-E0x">
                                                 <rect key="frame" x="47.5" y="110.5" width="281" height="38"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                 <nil key="textColor"/>
@@ -75,18 +75,26 @@
                                     <constraint firstItem="TzT-H2-Sjn" firstAttribute="height" secondItem="oOW-mr-O2D" secondAttribute="height" id="NRs-dD-Vaa"/>
                                 </constraints>
                             </stackView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="De4-5t-PI4">
+                                <rect key="frame" x="0.0" y="10" width="375" height="667"/>
+                                <color key="backgroundColor" red="0.50344406011450382" green="0.50344406011450382" blue="0.50344406011450382" alpha="0.49768587085308058" colorSpace="custom" customColorSpace="sRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="De4-5t-PI4" firstAttribute="centerX" secondItem="Uiq-eK-kzK" secondAttribute="centerX" id="CVI-ca-7Ox"/>
                             <constraint firstItem="Uiq-eK-kzK" firstAttribute="bottom" secondItem="XqE-w3-ZZJ" secondAttribute="bottom" id="UyX-0t-BGE"/>
                             <constraint firstItem="Uiq-eK-kzK" firstAttribute="trailing" secondItem="XqE-w3-ZZJ" secondAttribute="trailing" id="XIk-Bc-SLV"/>
                             <constraint firstItem="XqE-w3-ZZJ" firstAttribute="top" secondItem="Uiq-eK-kzK" secondAttribute="top" id="ffX-VN-2c0"/>
+                            <constraint firstItem="De4-5t-PI4" firstAttribute="height" secondItem="j0b-sO-Ge2" secondAttribute="height" id="fft-bI-dnm"/>
+                            <constraint firstItem="De4-5t-PI4" firstAttribute="width" secondItem="j0b-sO-Ge2" secondAttribute="width" id="htq-IW-KBy"/>
                             <constraint firstItem="XqE-w3-ZZJ" firstAttribute="leading" secondItem="Uiq-eK-kzK" secondAttribute="leading" id="iiE-Ez-ZFO"/>
+                            <constraint firstItem="De4-5t-PI4" firstAttribute="centerY" secondItem="Uiq-eK-kzK" secondAttribute="centerY" id="w00-5e-nkQ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Uiq-eK-kzK"/>
                     </view>
                     <connections>
-                        <outlet property="dropboxButton" destination="k8c-2K-aOe" id="Kgm-Cl-jmp"/>
+                        <outlet property="spinner" destination="De4-5t-PI4" id="dEn-KE-oxe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a1M-sT-mSb" userLabel="First Responder" sceneMemberID="firstResponder"/>
