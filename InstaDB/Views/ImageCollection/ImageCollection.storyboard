@@ -74,7 +74,7 @@
                             <constraint firstItem="FFq-AY-Fes" firstAttribute="trailing" secondItem="kby-Mt-lXT" secondAttribute="trailing" id="VlY-em-Pb6"/>
                             <constraint firstItem="kby-Mt-lXT" firstAttribute="top" secondItem="FFq-AY-Fes" secondAttribute="top" id="gHq-TA-2rR"/>
                             <constraint firstItem="kby-Mt-lXT" firstAttribute="leading" secondItem="FFq-AY-Fes" secondAttribute="leading" id="hU9-Yq-rkN"/>
-                            <constraint firstItem="FFq-AY-Fes" firstAttribute="bottom" secondItem="kby-Mt-lXT" secondAttribute="bottom" id="kVy-Yp-9wk"/>
+                            <constraint firstAttribute="bottom" secondItem="kby-Mt-lXT" secondAttribute="bottom" id="kVy-Yp-9wk"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="FFq-AY-Fes"/>
                     </view>
