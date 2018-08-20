@@ -84,8 +84,9 @@ class FileService {
   
   func upload(_ data: Data, toPath path: String, progressHandler: ((Double) -> Void)? = nil, completion: @escaping (String?) -> Void) {
     // TODO: Return the UploadRequest so it can be cancelled if necessary
-    let _ = client?.files.upload(path: path, input: data)
-      .response { response, error in
+    _ = client?.files.upload(path: path, input: data)
+      // TODO: Check documentation to see if Files.FileMetaData in response has something useful on an upload request. If so, do something useful with it.
+      .response { _, error in
         if let error = error {
           completion(error.errorDescription)
           return
