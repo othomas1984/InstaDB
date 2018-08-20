@@ -22,10 +22,10 @@ class ImageCollectionViewCell: UICollectionViewCell {
   var model: ImageCellViewModel? {
     didSet {
       nameDisposable = model?.downloadProgressLabel.bind(to: label.rx.text)
-      imageDisposable = model?.image.bind { [unowned self] (imageData: Data) in
+      imageDisposable = model?.image.bind { [weak self] (imageData: Data) in
         if let image = UIImage(data: imageData) {
-          self.spinner.stopAnimating()
-          self.imageView.image = image
+          self?.spinner.stopAnimating()
+          self?.imageView.image = image
         }
       }
     }
