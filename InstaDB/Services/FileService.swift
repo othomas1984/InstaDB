@@ -20,7 +20,7 @@ class FileService {
   }
   
   typealias Handle = Int
-  private var authChangeHandles = [Int: (AuthState) -> Void]()
+  private static var authChangeHandles = [Int: (AuthState) -> Void]()
   private var client: DropboxClient? {
     return DropboxClientsManager.authorizedClient
   }
@@ -42,14 +42,14 @@ class FileService {
   }
   
   func listenForAuthChanges(_ listener: @escaping (AuthState) -> Void) -> Handle {
-    let maxAuthHandle = authChangeHandles.keys.max() ?? 1
+    let maxAuthHandle = FileService.authChangeHandles.keys.max() ?? 1
     let nextAuthHandle = maxAuthHandle + 1
-    authChangeHandles[nextAuthHandle] = listener
+    FileService.authChangeHandles[nextAuthHandle] = listener
     return nextAuthHandle
   }
   
   func remove(handle: Handle) {
-    authChangeHandles[handle] = nil
+    FileService.authChangeHandles[handle] = nil
   }
   
   func fetchFileList(path: String, completion: @escaping ([Image], String?) -> Void) {
@@ -135,6 +135,6 @@ class FileService {
   }
   
   private func notifyListeners() {
-    authChangeHandles.forEach { $0.value(authState) }
+    FileService.authChangeHandles.forEach { $0.value(authState) }
   }
 }
