@@ -26,11 +26,7 @@ class AddPhotoViewController: UIViewController {
   
   private func upload(_ data: Data, forFileName fileName: String) {
     guard let newName = timeStamped(fileName: fileName) else { return }
-    FileService().upload(data, toPath: "/" + newName, progressHandler: { progress in
-      print(progress)
-    }, completion: { _ in
-      self.dismiss(animated: false, completion: nil)
-    })
+    FileService().upload(data, toPath: "/" + newName)
   }
   
   private func timeStamped(fileName: String) -> String? {
@@ -47,9 +43,11 @@ extension AddPhotoViewController: UIImagePickerControllerDelegate & UINavigation
   }
   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]) {
     dismiss(animated: true) {
-      if let imageUrl = info[UIImagePickerControllerImageURL] as? URL,
-        let imageData = try? Data.init(contentsOf: imageUrl) {
-        self.upload(imageData, forFileName: imageUrl.lastPathComponent)
+      self.dismiss(animated: false) {
+        if let imageUrl = info[UIImagePickerControllerImageURL] as? URL,
+          let imageData = try? Data.init(contentsOf: imageUrl) {
+          self.upload(imageData, forFileName: imageUrl.lastPathComponent)
+        }
       }
     }
   }

@@ -13,7 +13,7 @@
         <!--Add Photo View Controller-->
         <scene sceneID="FdO-aO-i81">
             <objects>
-                <viewController id="ZNX-Hc-u0l" customClass="AddPhotoViewController" customModule="InstaDB" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="overFullScreen" id="ZNX-Hc-u0l" customClass="AddPhotoViewController" customModule="InstaDB" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" opaque="NO" contentMode="scaleToFill" id="tma-0l-vLg">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
