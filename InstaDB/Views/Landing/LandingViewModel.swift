@@ -24,7 +24,7 @@ class LandingViewModel {
         observer.onNext(change)
       }
       return Disposables.create {
-        fileService.remove(handle: handle)
+        fileService.removeAuth(handle: handle)
       }
     }.startWith(fileService.authState).share()
     authenticated = authChange.asObservable()
