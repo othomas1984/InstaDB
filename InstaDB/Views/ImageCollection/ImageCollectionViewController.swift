@@ -42,6 +42,12 @@ class ImageCollectionViewController: UIViewController {
     model.loadImages.onNext(())
   }
 
+  override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    coordinator.animate(alongsideTransition: nil) { _ in
+      self.imageCollectionView.reloadData()
+    }
+  }
+  
   @IBAction func signOutTapped(_ sender: Any) {
     DropboxClientsManager.unlinkClients()
     guard let landingVC = UIStoryboard.init(name: "Landing", bundle: nil).instantiateInitialViewController(),
@@ -123,7 +129,7 @@ extension ImageCollectionViewController: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
                       sizeForItemAt indexPath: IndexPath) -> CGSize {
-    let size = (collectionView.bounds.width - itemSpacing * (numberOfItemsPerRow + 1)) / numberOfItemsPerRow
+    let size = CGFloat(Int((collectionView.bounds.width - itemSpacing * (numberOfItemsPerRow + 1)) / numberOfItemsPerRow))
     return CGSize(width: size, height: size)
   }
   func collectionView(_ collectionView: UICollectionView,
