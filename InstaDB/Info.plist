@@ -57,5 +57,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>InstaDB needs access to your photo library so you can upload your photos to be stored on Dropbox</string>
 </dict>
 </plist>
