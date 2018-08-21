@@ -67,7 +67,7 @@ class FileService {
     if let file = FileService.fetchedFiles[path] {
       completion(file, nil)
     }
-    FileService.client?.files.getThumbnail(path: path, format: .png, size: .w256h256, mode: .fitoneBestfit).response { response, error in
+    FileService.client?.files.getThumbnail(path: path, format: .png, size: .w640h480, mode: .fitoneBestfit).response { response, error in
       if let error = error {
         completion(nil, error.errorDescription)
         return
