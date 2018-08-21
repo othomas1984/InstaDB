@@ -16,6 +16,7 @@ class ImageCollectionViewController: UIViewController {
   var model: ImageCollectionViewModel!
   
   @IBOutlet weak var imageCollectionView: UICollectionView!
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     imageCollectionView.delegate = self
@@ -26,6 +27,15 @@ class ImageCollectionViewController: UIViewController {
             imageCell.model = ImageCellViewModel(image)
           }
       }.disposed(by: disposeBag)
+    let refreshControl = UIRefreshControl()
+    imageCollectionView.refreshControl = refreshControl
+    model.images.map { _ in false }.bind(to: refreshControl.rx.isRefreshing).disposed(by: disposeBag)
+    refreshControl.rx.controlEvent(.valueChanged).bind(to: model.loadImages).disposed(by: disposeBag)
+  }
+  
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    model.loadImages.onNext(())
   }
 
   @IBAction func signOutTapped(_ sender: Any) {
