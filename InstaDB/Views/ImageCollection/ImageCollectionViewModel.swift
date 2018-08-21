@@ -12,10 +12,10 @@ import RxSwift
 class ImageCollectionViewModel {
   let images: Observable<[Image]>
   let loadImages: AnyObserver<()>
-  let fileUploadProgress: Observable<[String: Double]>
+  let fileUploadProgress: Observable<[FileService.Path: FileService.Progress]>
 
   init(_ fileService: FileService = FileService()) {
-    fileUploadProgress = Observable<[String: Double]>.create { observer in
+    fileUploadProgress = Observable<[FileService.Path: FileService.Progress]>.create { observer in
       let handle = fileService.listenForFileUploadChanges { change in
         observer.onNext(change)
       }
