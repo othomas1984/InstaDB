@@ -44,7 +44,6 @@ class FileService {
     notifyAuthListeners()
   }
   
-  
   // MARK: - File Manipulation
   func fetchFileList(path: Path, completion: @escaping ([Image], String?) -> Void) {
     FileService.client?.files.listFolder(path: path).response { result, error in
@@ -76,9 +75,9 @@ class FileService {
       let data = response?.1
       FileService.fetchedThumbnails[path] = data
       completion(data, nil)
-      }
-      .progress { progressData in
-        progressHandler?(progressData.fractionCompleted)
+    }
+    .progress { progressData in
+      progressHandler?(progressData.fractionCompleted)
     }
   }
   
@@ -95,30 +94,29 @@ class FileService {
       let data = response?.1
       FileService.fetchedFiles[path] = data
       completion(data, nil)
-      }
-      .progress { progressData in
-        progressHandler?(progressData.fractionCompleted)
+    }
+    .progress { progressData in
+      progressHandler?(progressData.fractionCompleted)
     }
   }
   
   func upload(_ data: Data, toPath path: Path, progressHandler: ((Progress) -> Void)? = nil, completion: ((String?) -> Void)? = nil) {
     // TODO: Return the UploadRequest so it can be cancelled if necessary
     updateProgress(path: path, progress: 0)
-    _ = FileService.client?.files.upload(path: path, input: data)
+    _ = FileService.client?.files.upload(path: path, input: data).response { _, error in
       // TODO: Check documentation to see if Files.FileMetaData in response has something
       // useful on an upload request. If so, do something useful with it.
-      .response { _, error in
-        // TODO: Post upload errors to FileService.uploads to notify user of upload failures
-        if let error = error {
-          completion?(error.errorDescription)
-          return
-        }
-        FileService.fetchedFiles[path.lowercased()] = data
-        completion?(nil)
+      
+      // TODO: Post upload errors to FileService.uploads to notify user of upload failures
+      if let error = error {
+        completion?(error.errorDescription)
+        return
       }
-      .progress { progressData in
-        self.updateProgress(path: path, progress: progressData.fractionCompleted)
-        progressHandler?(progressData.fractionCompleted)
+      FileService.fetchedFiles[path.lowercased()] = data
+      completion?(nil)
+    }.progress { progressData in
+      self.updateProgress(path: path, progress: progressData.fractionCompleted)
+      progressHandler?(progressData.fractionCompleted)
     }
   }
   
@@ -148,7 +146,6 @@ class FileService {
   @objc private func authSuccess() { notifyAuthListeners() }
   @objc private func authCancel() { signOut() }
   @objc private func authError(_ notification: Notification) { signOut() }
-  
 
   // MARK: - File Upload Listener
   private static var uploadsInProgress = [Path: Progress]()
