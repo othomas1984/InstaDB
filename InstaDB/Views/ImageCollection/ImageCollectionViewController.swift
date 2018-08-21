@@ -41,12 +41,12 @@ class ImageCollectionViewController: UIViewController {
 }
 
 extension ImageCollectionViewController: UICollectionViewDelegateFlowLayout {
-  var numberOfItemsPerRow: CGFloat { return 3 }
-  var itemSpacing: CGFloat { return 8 }
+  var numberOfItemsPerRow: CGFloat { return round(imageCollectionView.frame.width / 125) }
+  var itemSpacing: CGFloat { return 4 }
   func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
                       sizeForItemAt indexPath: IndexPath) -> CGSize {
-    let size = (view.bounds.width - itemSpacing * (numberOfItemsPerRow + 1)) / numberOfItemsPerRow
+    let size = (collectionView.bounds.width - itemSpacing * (numberOfItemsPerRow + 1)) / numberOfItemsPerRow
     return CGSize(width: size, height: size)
   }
   func collectionView(_ collectionView: UICollectionView,
