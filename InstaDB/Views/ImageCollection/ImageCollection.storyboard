@@ -85,11 +85,21 @@
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" id="uKW-bv-ojP">
+                        <nil key="title"/>
                         <barButtonItem key="leftBarButtonItem" title="Sign Out" id="xJo-Ah-3UI">
                             <connections>
                                 <action selector="signOutTapped:" destination="mdU-1n-o7Y" id="WXm-Si-Rjd"/>
                             </connections>
                         </barButtonItem>
+                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="jGS-Qm-C3r">
+                            <rect key="frame" x="113" y="7" width="149" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="Small"/>
+                                <segment title="Med"/>
+                                <segment title="Large"/>
+                            </segments>
+                        </segmentedControl>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="gb3-YO-9f3">
                             <connections>
                                 <action selector="addTapped:" destination="mdU-1n-o7Y" id="GZg-7p-m08"/>
@@ -98,6 +108,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="imageCollectionView" destination="kby-Mt-lXT" id="bK5-a7-u6N"/>
+                        <outlet property="sizeSegmentedControl" destination="jGS-Qm-C3r" id="mGk-CU-dWo"/>
                         <outlet property="stackView" destination="CKQ-El-Kip" id="gl2-Ds-ZSr"/>
                     </connections>
                 </viewController>

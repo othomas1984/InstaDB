@@ -15,6 +15,7 @@ class ImageCollectionViewController: UIViewController {
   var disposeBag = DisposeBag()
   var model: ImageCollectionViewModel!
   
+  @IBOutlet weak var sizeSegmentedControl: UISegmentedControl!
   @IBOutlet weak var stackView: UIStackView!
   @IBOutlet weak var imageCollectionView: UICollectionView!
   var uploadProgressIndicators = [String: UIView]()
@@ -35,6 +36,7 @@ class ImageCollectionViewController: UIViewController {
     model.fileUploadProgress.bind { [unowned self] uploads in
       self.updateFileUploadProgress(uploads)
     }.disposed(by: disposeBag)
+    sizeSegmentedControl.rx.value.bind(to: model.imageSizeObserver).disposed(by: disposeBag)
   }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -124,24 +126,35 @@ class ImageCollectionViewController: UIViewController {
 }
 
 extension ImageCollectionViewController: UICollectionViewDelegateFlowLayout {
-  var numberOfItemsPerRow: CGFloat { return round(imageCollectionView.frame.width / 125) }
-  var itemSpacing: CGFloat { return 4 }
+  var itemSpacing: CGFloat { return 1 }
+  var insetSpacing: CGFloat { return 0 }
+  var numberOfItemsPerRow: CGFloat {
+    let intendedSize = (try? model.imageSize.value()) ?? 125
+    return round(imageCollectionView.frame.width / intendedSize)
+  }
+  
   func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
                       sizeForItemAt indexPath: IndexPath) -> CGSize {
-    let size = CGFloat(Int((collectionView.bounds.width - itemSpacing * (numberOfItemsPerRow + 1)) / numberOfItemsPerRow))
-    return CGSize(width: size, height: size)
+    let spaceBetweenImages = itemSpacing * (numberOfItemsPerRow - 1)
+    let spaceOutsideImages = insetSpacing * 2
+    let size = (collectionView.bounds.width - spaceBetweenImages - spaceOutsideImages) / numberOfItemsPerRow
+    let sizeRoundedDown = floor(size)
+    return CGSize(width: sizeRoundedDown, height: sizeRoundedDown)
   }
+  
   func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
                       insetForSectionAt section: Int) -> UIEdgeInsets {
-    return UIEdgeInsets(top: itemSpacing, left: itemSpacing, bottom: itemSpacing, right: itemSpacing)
+    return UIEdgeInsets(top: insetSpacing, left: insetSpacing, bottom: insetSpacing, right: insetSpacing)
   }
+  
   func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
                       minimumLineSpacingForSectionAt section: Int) -> CGFloat {
     return itemSpacing
   }
+  
   func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
                       minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
