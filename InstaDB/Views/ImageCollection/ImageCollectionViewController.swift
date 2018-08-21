@@ -46,7 +46,10 @@ class ImageCollectionViewController: UIViewController {
       window.rootViewController = landingVC
     }, completion: nil)
   }
+  
   @IBAction func addTapped(_ sender: Any) {
+    guard let addPhotoVC = UIStoryboard.init(name: "AddPhoto", bundle: nil).instantiateInitialViewController() else { return }
+    present(addPhotoVC, animated: false, completion: nil)
   }
 }
 

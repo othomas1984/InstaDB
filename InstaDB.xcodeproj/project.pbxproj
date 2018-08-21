@@ -20,6 +20,8 @@
 		336638C62128AA6300FC141A /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336638C52128AA6300FC141A /* ImageCollectionViewCell.swift */; };
 		336638C82128AA7D00FC141A /* ImageCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336638C72128AA7D00FC141A /* ImageCellViewModel.swift */; };
 		336638CA2128B29700FC141A /* CallErrorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336638C92128B29700FC141A /* CallErrorExtension.swift */; };
+		336638CD2128DCA800FC141A /* AddPhoto.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 336638CC2128DCA800FC141A /* AddPhoto.storyboard */; };
+		336638CF2128DD7000FC141A /* AddPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336638CE2128DD7000FC141A /* AddPhotoViewController.swift */; };
 		33A380ED21277DCB00EFB043 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A380EC21277DCB00EFB043 /* AppDelegate.swift */; };
 		33A380F421277DCC00EFB043 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33A380F321277DCC00EFB043 /* Assets.xcassets */; };
 		33A380F721277DCC00EFB043 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33A380F521277DCC00EFB043 /* LaunchScreen.storyboard */; };
@@ -40,6 +42,8 @@
 		336638C52128AA6300FC141A /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		336638C72128AA7D00FC141A /* ImageCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCellViewModel.swift; sourceTree = "<group>"; };
 		336638C92128B29700FC141A /* CallErrorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallErrorExtension.swift; sourceTree = "<group>"; };
+		336638CC2128DCA800FC141A /* AddPhoto.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AddPhoto.storyboard; sourceTree = "<group>"; };
+		336638CE2128DD7000FC141A /* AddPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhotoViewController.swift; sourceTree = "<group>"; };
 		33A380E921277DCB00EFB043 /* InstaDB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InstaDB.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		33A380EC21277DCB00EFB043 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		33A380F321277DCC00EFB043 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -84,6 +88,7 @@
 				336638BA2127B28900FC141A /* ViewModelDelegate.swift */,
 				336638AD2127983F00FC141A /* Landing */,
 				336638BC21289F2500FC141A /* ImageCollection */,
+				336638CB2128DC9200FC141A /* AddPhoto */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -125,6 +130,15 @@
 				336638BD21289F3B00FC141A /* ImageCollection.storyboard */,
 			);
 			path = ImageCollection;
+			sourceTree = "<group>";
+		};
+		336638CB2128DC9200FC141A /* AddPhoto */ = {
+			isa = PBXGroup;
+			children = (
+				336638CC2128DCA800FC141A /* AddPhoto.storyboard */,
+				336638CE2128DD7000FC141A /* AddPhotoViewController.swift */,
+			);
+			path = AddPhoto;
 			sourceTree = "<group>";
 		};
 		33A380E021277DCB00EFB043 = {
@@ -239,6 +253,7 @@
 			files = (
 				33A380F721277DCC00EFB043 /* LaunchScreen.storyboard in Resources */,
 				33A380F421277DCC00EFB043 /* Assets.xcassets in Resources */,
+				336638CD2128DCA800FC141A /* AddPhoto.storyboard in Resources */,
 				336638BE21289F3B00FC141A /* ImageCollection.storyboard in Resources */,
 				336638B32127987500FC141A /* Landing.storyboard in Resources */,
 			);
@@ -286,6 +301,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				336638CF2128DD7000FC141A /* AddPhotoViewController.swift in Sources */,
 				336638CA2128B29700FC141A /* CallErrorExtension.swift in Sources */,
 				336638C62128AA6300FC141A /* ImageCollectionViewCell.swift in Sources */,
 				336638C82128AA7D00FC141A /* ImageCellViewModel.swift in Sources */,
