@@ -18,17 +18,26 @@ class ImageCollectionViewModel {
   let imageSizeObserver: AnyObserver<Int>
 
   init(_ fileService: FileService = FileService()) {
+    let reloadImagesSubject = PublishSubject<()>()
+    loadImages = reloadImagesSubject.asObserver()
+
+    let imageSizeObserverSubject = PublishSubject<Int>()
+    imageSizeObserver = imageSizeObserverSubject.asObserver()
+
     fileUploadProgress = Observable<[FileService.Path: FileService.UploadState]>.create { observer in
-      let handle = fileService.listenForFileUploadChanges { change in
-        observer.onNext(change)
+      let handle = fileService.listenForFileUploadChanges { changes in
+        changes.forEach { change in
+          if case .complete = change.value {
+            reloadImagesSubject.onNext(())
+          }
+        }
+        observer.onNext(changes)
       }
       return Disposables.create {
         fileService.removeFileUpload(handle: handle)
       }
     }
     
-    let reloadImagesSubject = PublishSubject<()>()
-    loadImages = reloadImagesSubject.asObserver()
     let newImages = reloadImagesSubject.map { _ in
       Observable<[Image]>.create { observer in
         fileService.fetchFileList(path: "") { images, errorDescription in
@@ -43,13 +52,10 @@ class ImageCollectionViewModel {
       }
     }.merge().share()
     
-    let imageSizeObserverSubject = PublishSubject<Int>()
-    imageSizeObserver = imageSizeObserverSubject.asObserver()
     images = Observable.combineLatest(newImages, imageSizeObserverSubject).map { images, _ in images }
     imageSizeObserverSubject.subscribe { [unowned self] event in
       guard case let .next(value) = event else { return }
       self.imageSize.onNext(CGFloat((value + 1) * 125))
     }.disposed(by: disposeBag)
-    
   }
 }
