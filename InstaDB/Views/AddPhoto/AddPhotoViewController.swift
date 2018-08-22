@@ -6,7 +6,6 @@
 //  Copyright © 2018 SwiftCoders. All rights reserved.
 //
 
-import Photos
 import UIKit
 
 class AddPhotoViewController: UIViewController {

@@ -6,9 +6,8 @@
 //  Copyright © 2018 SwiftCoders. All rights reserved.
 //
 
+import RxCocoa
 import RxSwift
-// TODO: Remove SwiftyDropbox by routing calls through View Model then through FileService
-import SwiftyDropbox
 import UIKit
 
 class LandingViewController: UIViewController {
@@ -24,9 +23,7 @@ class LandingViewController: UIViewController {
   }
   
   @IBAction func dropboxButtonTapped() {
-    DropboxClientsManager.authorizeFromController(UIApplication.shared, controller: self) {
-      UIApplication.shared.open($0)
-    }
+    FileService.authenticate(from: self)
   }
   
   private func handleAuthChange() {

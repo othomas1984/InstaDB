@@ -8,8 +8,6 @@
 
 import RxCocoa
 import RxSwift
-// TODO: Remove SwiftyDropbox by routing calls through View Model then through FileService
-import SwiftyDropbox
 import UIKit
 
 class ImageCollectionViewController: UIViewController {
@@ -63,7 +61,7 @@ class ImageCollectionViewController: UIViewController {
   }
   
   @IBAction func signOutTapped(_ sender: Any) {
-    DropboxClientsManager.unlinkClients()
+    FileService.signOut()
     guard let landingVC = UIStoryboard.init(name: "Landing", bundle: nil).instantiateInitialViewController(),
     let window = UIApplication.shared.keyWindow else { return }
     UIView.transition(with: window, duration: 0.5, options: [.transitionFlipFromLeft], animations: {
