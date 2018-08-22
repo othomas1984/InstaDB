@@ -126,6 +126,18 @@ class FileService {
     }
   }
   
+  func delete(_ path: Path, completion: ((String?) -> Void)? = nil) {
+    FileService.client?.files.deleteV2(path: path).response { result, error in
+      if let error = error {
+        completion?(error.errorDescription)
+        return
+      }
+      FileService.fetchedFiles[path.lowercased()] = nil
+      FileService.fetchedThumbnails[path.lowercased()] = nil
+      completion?(nil)
+    }
+  }
+  
   // MARK: - Auth Change Listener
   private static var authChangeHandles = [Handle: (AuthState) -> Void]()
 
