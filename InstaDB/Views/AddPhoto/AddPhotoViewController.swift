@@ -47,7 +47,7 @@ extension AddPhotoViewController: UIImagePickerControllerDelegate & UINavigation
         if #available(iOS 11.0, *) {
           if let imageUrl = info[UIImagePickerControllerImageURL] as? URL,
             let imageData = try? Data.init(contentsOf: imageUrl) {
-            self.upload(imageData, forFileName: imageUrl.lastPathComponent)
+            self.upload(imageData, forFileName: "upload.jpg")
           }
         } else {
           if let image = info[UIImagePickerControllerOriginalImage] as? UIImage,

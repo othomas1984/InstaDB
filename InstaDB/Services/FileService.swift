@@ -19,6 +19,12 @@ class FileService {
     case unauthenticated
   }
   
+  enum UploadState {
+    case uploading(progress: Double)
+    case complete
+    case error(error: String)
+  }
+  
   var authState: AuthState {
     return FileService.client == nil ? .unauthenticated : .authenticated
   }
@@ -102,20 +108,24 @@ class FileService {
   
   func upload(_ data: Data, toPath path: Path, progressHandler: ((Progress) -> Void)? = nil, completion: ((String?) -> Void)? = nil) {
     // TODO: Return the UploadRequest so it can be cancelled if necessary
-    updateProgress(path: path, progress: 0)
+    updateProgress(path: path, state: .uploading(progress: 0))
     _ = FileService.client?.files.upload(path: path, input: data).response { _, error in
       // TODO: Check documentation to see if Files.FileMetaData in response has something
       // useful on an upload request. If so, do something useful with it.
       
       // TODO: Post upload errors to FileService.uploads to notify user of upload failures
       if let error = error {
+        self.updateProgress(path: path, state: .error(error: error.errorDescription))
+        self.removeUpload(path: path)
         completion?(error.errorDescription)
         return
       }
       FileService.fetchedFiles[path.lowercased()] = data
+      self.updateProgress(path: path, state: .complete)
+      self.removeUpload(path: path)
       completion?(nil)
     }.progress { progressData in
-      self.updateProgress(path: path, progress: progressData.fractionCompleted)
+      self.updateProgress(path: path, state: .uploading(progress: progressData.fractionCompleted))
       progressHandler?(progressData.fractionCompleted)
     }
   }
@@ -148,10 +158,10 @@ class FileService {
   @objc private func authError(_ notification: Notification) { signOut() }
 
   // MARK: - File Upload Listener
-  private static var uploadsInProgress = [Path: Progress]()
-  private static var fileUploadProgressHandles = [Handle: ([Path: Progress]) -> Void]()
+  private static var uploadsInProgress = [Path: UploadState]()
+  private static var fileUploadProgressHandles = [Handle: ([Path: UploadState]) -> Void]()
 
-  func listenForFileUploadChanges(_ listener: @escaping ([Path: Progress]) -> Void) -> Handle {
+  func listenForFileUploadChanges(_ listener: @escaping ([Path: UploadState]) -> Void) -> Handle {
     let maxAuthHandle = FileService.fileUploadProgressHandles.keys.max() ?? 1
     let nextAuthHandle = maxAuthHandle + 1
     FileService.fileUploadProgressHandles[nextAuthHandle] = listener
@@ -162,8 +172,13 @@ class FileService {
     FileService.fileUploadProgressHandles[handle] = nil
   }
 
-  private func updateProgress(path: Path, progress: Progress) {
-    FileService.uploadsInProgress[path] = progress == 1.0 ? nil : progress
+  private func updateProgress(path: Path, state: UploadState) {
+    FileService.uploadsInProgress[path] = state
+    notifyFileUploadListeners()
+  }
+  
+  private func removeUpload(path: Path) {
+    FileService.uploadsInProgress[path] = nil
     notifyFileUploadListeners()
   }
   

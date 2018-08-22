@@ -65,61 +65,94 @@ class ImageCollectionViewController: UIViewController {
   }
   
   // TODO: Refactor progress view into it's own UIView subclass
-  private func updateFileUploadProgress(_ uploads: [FileService.Path: FileService.Progress]) {
-    for (path, progress) in uploads {
+  private func updateFileUploadProgress(_ uploads: [FileService.Path: FileService.UploadState]) {
+    for (path, state) in uploads {
       // Update progress indicator if present
-      if let progressView = self.uploadProgressIndicators[path] {
-        (progressView.subviews[1] as? UILabel)?.text = "\(Int(progress * 100))%"
+      let containerView: UIView
+      let progressView: UIView
+      let uploadLabel: UILabel
+      let progressLabel: UILabel
+
+      if let container = self.uploadProgressIndicators[path] {
+        containerView = container
+        progressView = containerView.subviews[0]
+        guard let upload = progressView.subviews[0] as? UILabel,
+          let progress = progressView.subviews[1] as? UILabel else { return }
+        uploadLabel = upload
+        progressLabel = progress
         
       // Add progress indicator if not present
       } else {
-        let progressView = UIView()
+        containerView = UIView()
+        progressView = UIView()
+        containerView.addSubview(progressView)
+        containerView.centerXAnchor.constraint(equalTo: progressView.centerXAnchor).isActive = true
+        containerView.centerYAnchor.constraint(equalTo: progressView.centerYAnchor).isActive = true
+        containerView.heightAnchor.constraint(equalTo: progressView.heightAnchor, constant: 6).isActive = true
+        containerView.widthAnchor.constraint(equalTo: progressView.widthAnchor, constant: 8).isActive = true
+        progressView.layer.backgroundColor = #colorLiteral(red: 0.1960784314, green: 0.6235294118, blue: 0.9647058824, alpha: 1).cgColor
+        
+        progressView.layer.cornerRadius = 10
         progressView.translatesAutoresizingMaskIntoConstraints = false
-        let uploadLabel = UILabel()
+        uploadLabel = UILabel()
         uploadLabel.translatesAutoresizingMaskIntoConstraints = false
-        uploadLabel.text = "Uploading \(path)"
         uploadLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
+        uploadLabel.textColor = .white
         uploadLabel.lineBreakMode = .byTruncatingMiddle
-        let progressLabel = UILabel()
-        progressLabel.text = "\(Int(progress * 100))%"
+        progressLabel = UILabel()
         progressLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
+        progressLabel.textColor = .white
         progressLabel.translatesAutoresizingMaskIntoConstraints = false
         progressView.addSubview(uploadLabel)
         progressView.addSubview(progressLabel)
-        uploadLabel.leadingAnchor.constraint(equalTo: progressView.leadingAnchor, constant: 16).isActive = true
-        progressLabel.leadingAnchor.constraint(equalTo: uploadLabel.trailingAnchor, constant: 16).isActive = true
-        progressView.trailingAnchor.constraint(equalTo: progressLabel.trailingAnchor, constant: 16).isActive = true
+        uploadLabel.leadingAnchor.constraint(equalTo: progressView.leadingAnchor, constant: 8).isActive = true
+        progressLabel.leadingAnchor.constraint(equalTo: uploadLabel.trailingAnchor, constant: 8).isActive = true
+        progressView.trailingAnchor.constraint(equalTo: progressLabel.trailingAnchor, constant: 8).isActive = true
         progressLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         uploadLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         progressLabel.firstBaselineAnchor.constraint(equalTo: uploadLabel.firstBaselineAnchor).isActive = true
         uploadLabel.centerYAnchor.constraint(equalTo: progressView.centerYAnchor).isActive = true
-        progressView.heightAnchor.constraint(equalTo: uploadLabel.heightAnchor, constant: 8).isActive = true
+        progressView.heightAnchor.constraint(equalTo: uploadLabel.heightAnchor, constant: 12).isActive = true
         progressView.isHidden = true
         progressView.alpha = 0
-        self.uploadProgressIndicators[path] = progressView
-        self.stackView.insertArrangedSubview(progressView, at: self.stackView.arrangedSubviews.count - 1)
+        self.uploadProgressIndicators[path] = containerView
+        self.stackView.insertArrangedSubview(containerView, at: self.stackView.arrangedSubviews.count - 1)
         UIView.animate(withDuration: 0.25) {
           progressView.alpha = 1
           progressView.isHidden = false
         }
       }
+      switch state {
+      case let .uploading(progress):
+        uploadLabel.text = "Uploading \(path)"
+        progressLabel.text = "\(Int(progress * 100))%"
+        progressView.layer.backgroundColor = #colorLiteral(red: 0.1960784314, green: 0.6235294118, blue: 0.9647058824, alpha: 1).cgColor
+      case .complete:
+        uploadLabel.text = "Uploading: \(path)"
+        progressLabel.text = "Complete"
+        progressView.layer.backgroundColor = #colorLiteral(red: 0.1098039216, green: 0.7333333333, blue: 0.2823529412, alpha: 1).cgColor
+        model.loadImages.onNext(())
+      case let .error(error):
+        uploadLabel.text = error
+        uploadLabel.numberOfLines = 0
+        uploadLabel.lineBreakMode = .byWordWrapping
+        progressLabel.text = nil
+        progressView.layer.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.09803921569, blue: 0.1294117647, alpha: 1).cgColor
+      }
     }
     
     // Remove any progress indicators which are no longer needed
-    self.uploadProgressIndicators.forEach { path, progressView in
+    self.uploadProgressIndicators.forEach { path, containerView in
       if !uploads.keys.contains(path) {
         self.uploadProgressIndicators[path] = nil
-        UIView.animate(withDuration: 0.25, animations: {
-          progressView.isHidden = true
-          progressView.alpha = 0
-        }, completion: { _ in
-          progressView.removeFromSuperview()
-          // TODO: Use the file service to notify when the upload is complete via the completion handler of the
-          // upload method. Often even with this 2 second delay the file is not ready on the Dropbox server yet
-          Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { _ in
-            self.model.loadImages.onNext(())
-          }
-        })
+        Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { _ in
+          UIView.animate(withDuration: 0.5, animations: {
+            containerView.isHidden = true
+            containerView.alpha = 0
+          }, completion: { _ in
+            containerView.removeFromSuperview()
+          })
+        }
       }
     }
   }
