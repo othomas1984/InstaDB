@@ -25,8 +25,23 @@ extension CallError {
       return("HTTPError[\(requestId ?? "Unknown")]: \(code ?? 0): \(message ?? "Unknown")")
     case let .clientError(error):
       return("ClientError: \(error?.localizedDescription ?? "Unknown")")
-    case .routeError:
-      return("Path does not exist")
+    case let .routeError(boxed, _, errorSummary, _):
+      guard let error = boxed.unboxed as? Files.UploadError else { return "Unknown Error" }
+      switch error {
+      case let .path(writeFailed):
+        switch writeFailed.reason {
+        case .insufficientSpace:
+          return "Your Dropbox out of storage space."
+        case .tooManyWriteOperations:
+          return "Server busy. Please try again."
+        default:
+          return "Upload failure (\(errorSummary ?? "unknown_error"))."
+        }
+      case .other:
+        return "Unknown File Upload Error"
+      case let .propertiesError(invalidProperties):
+        return invalidProperties.description
+      }
     }
   }
 }
