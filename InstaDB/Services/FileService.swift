@@ -14,43 +14,19 @@ class FileService {
   typealias Path = String
   typealias Progress = Double
   
-  enum AuthState {
-    case authenticated
-    case unauthenticated
-  }
-  
-  enum UploadState {
-    case uploading(progress: Double)
-    case complete
-    case error(error: String)
-  }
-  
-  var authState: AuthState {
-    return FileService.client == nil ? .unauthenticated : .authenticated
+  static func setup() {
+    DropboxClientsManager.setupWithAppKey("kv804kipmgbpxnx")
   }
   
   private static var client: DropboxClient? {
     return DropboxClientsManager.authorizedClient
   }
   
+  // MARK: - File Manipulation
   // TODO: Switch to NSCache for better caching
   private static var fetchedFiles = [Path: Data]()
   private static var fetchedThumbnails = [Path: Data]()
-
-  init() {
-    setupAuthChangeListeners()
-  }
   
-  deinit {
-    NotificationCenter.default.removeObserver(self)
-  }
-  
-  func signOut() {
-    DropboxClientsManager.unlinkClients()
-    notifyAuthListeners()
-  }
-  
-  // MARK: - File Manipulation
   func fetchFileList(path: Path, completion: @escaping ([Image], String?) -> Void) {
     FileService.client?.files.listFolder(path: path).response { result, error in
       if let error = error {
@@ -127,7 +103,7 @@ class FileService {
   }
   
   func delete(_ path: Path, completion: ((String?) -> Void)? = nil) {
-    FileService.client?.files.deleteV2(path: path).response { result, error in
+    FileService.client?.files.deleteV2(path: path).response { _, error in
       if let error = error {
         completion?(error.errorDescription)
         return
@@ -138,8 +114,37 @@ class FileService {
     }
   }
   
-  // MARK: - Auth Change Listener
+  // MARK: - Authentication
+  enum AuthState {
+    case authenticated
+    case unauthenticated
+  }
+  
+  static func authenticate(from controller: UIViewController) {
+    DropboxClientsManager.authorizeFromController(UIApplication.shared, controller: controller) {
+      UIApplication.shared.open($0)
+    }
+  }
+  
+  static var authState: AuthState {
+    return client == nil ? .unauthenticated : .authenticated
+  }
+  
+  var authState: AuthState {
+    return FileService.authState
+  }
+  
   private static var authChangeHandles = [Handle: (AuthState) -> Void]()
+
+  static func handleDropboxCallback(_ url: URL) {
+    guard let result = DropboxClientsManager.handleRedirectURL(url) else { return }
+    switch result {
+    case .success:
+      notifyAuthListeners()
+    case .error, .cancel:
+      signOut()
+    }
+  }
 
   func listenForAuthChanges(_ listener: @escaping (AuthState) -> Void) -> Handle {
     let maxAuthHandle = FileService.authChangeHandles.keys.max() ?? 1
@@ -152,21 +157,22 @@ class FileService {
     FileService.authChangeHandles[handle] = nil
   }
   
-  private func notifyAuthListeners() {
-    FileService.authChangeHandles.forEach { $0.value(authState) }
+  private static func notifyAuthListeners() {
+    authChangeHandles.forEach { $0.value(authState) }
   }
-  
-  private func setupAuthChangeListeners() {
-    NotificationCenter.default.addObserver(self, selector: #selector(authSuccess), name: .dropboxAuthSuccess, object: nil)
-    NotificationCenter.default.addObserver(self, selector: #selector(authCancel), name: .dropboxAuthCancel, object: nil)
-    NotificationCenter.default.addObserver(self, selector: #selector(authError(_:)), name: .dropboxAuthError, object: nil)
-  }
-  
-  @objc private func authSuccess() { notifyAuthListeners() }
-  @objc private func authCancel() { signOut() }
-  @objc private func authError(_ notification: Notification) { signOut() }
 
+  static func signOut() {
+    DropboxClientsManager.unlinkClients()
+    notifyAuthListeners()
+  }
+  
   // MARK: - File Upload Listener
+  enum UploadState {
+    case uploading(progress: Double)
+    case complete
+    case error(error: String)
+  }
+
   private static var uploadsInProgress = [Path: UploadState]()
   private static var fileUploadProgressHandles = [Handle: ([Path: UploadState]) -> Void]()
 
