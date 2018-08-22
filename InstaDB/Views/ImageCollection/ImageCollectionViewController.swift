@@ -18,6 +18,7 @@ class ImageCollectionViewController: UIViewController {
   @IBOutlet weak var sizeSegmentedControl: UISegmentedControl!
   @IBOutlet weak var stackView: UIStackView!
   @IBOutlet weak var imageCollectionView: UICollectionView!
+  @IBOutlet weak var welcomeView: UIView!
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -31,6 +32,7 @@ class ImageCollectionViewController: UIViewController {
       }.disposed(by: disposeBag)
     let refreshControl = UIRefreshControl()
     imageCollectionView.refreshControl = refreshControl
+    model.images.map { !$0.isEmpty }.startWith(true).bind(to: welcomeView.rx.isHidden).disposed(by: disposeBag)
     model.images.map { _ in false }.bind(to: refreshControl.rx.isRefreshing).disposed(by: disposeBag)
     refreshControl.rx.controlEvent(.valueChanged).bind(to: model.loadImages).disposed(by: disposeBag)
     model.fileUploadProgress.bind { [unowned self] uploads in
