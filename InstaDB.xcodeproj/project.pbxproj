@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3325F404212DE8FF00EF8739 /* UploadProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3325F403212DE8FF00EF8739 /* UploadProgressView.swift */; };
 		336638AF2127986500FC141A /* LandingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336638AE2127986500FC141A /* LandingViewModel.swift */; };
 		336638B12127986F00FC141A /* LandingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336638B02127986F00FC141A /* LandingViewController.swift */; };
 		336638B32127987500FC141A /* Landing.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 336638B22127987500FC141A /* Landing.storyboard */; };
@@ -29,6 +30,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3325F403212DE8FF00EF8739 /* UploadProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadProgressView.swift; sourceTree = "<group>"; };
 		336638AE2127986500FC141A /* LandingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingViewModel.swift; sourceTree = "<group>"; };
 		336638B02127986F00FC141A /* LandingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingViewController.swift; sourceTree = "<group>"; };
 		336638B22127987500FC141A /* Landing.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Landing.storyboard; sourceTree = "<group>"; };
@@ -72,6 +74,14 @@
 				3EE9ACD732C3C84ABDC39C74 /* libPods-InstaDB.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3325F402212DE8D100EF8739 /* UploadProgress */ = {
+			isa = PBXGroup;
+			children = (
+				3325F403212DE8FF00EF8739 /* UploadProgressView.swift */,
+			);
+			path = UploadProgress;
 			sourceTree = "<group>";
 		};
 		336638AA212797EB00FC141A /* Models */ = {
@@ -128,6 +138,7 @@
 				336638BF21289FD400FC141A /* ImageCollectionViewController.swift */,
 				336638C52128AA6300FC141A /* ImageCollectionViewCell.swift */,
 				336638BD21289F3B00FC141A /* ImageCollection.storyboard */,
+				3325F402212DE8D100EF8739 /* UploadProgress */,
 			);
 			path = ImageCollection;
 			sourceTree = "<group>";
@@ -313,6 +324,7 @@
 				336638B92127A58600FC141A /* NotificationNameExtension.swift in Sources */,
 				336638B62127A1FE00FC141A /* FileService.swift in Sources */,
 				33A380ED21277DCB00EFB043 /* AppDelegate.swift in Sources */,
+				3325F404212DE8FF00EF8739 /* UploadProgressView.swift in Sources */,
 				336638C42128A5B800FC141A /* Image.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
