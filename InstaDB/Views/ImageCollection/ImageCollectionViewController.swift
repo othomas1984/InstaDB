@@ -124,7 +124,7 @@ class ImageCollectionViewController: UIViewController {
       }
       switch state {
       case let .uploading(progress):
-        uploadLabel.text = "Uploading \(path)"
+        uploadLabel.text = "Uploading: \(path)"
         progressLabel.text = "\(Int(progress * 100))%"
         progressView.layer.backgroundColor = #colorLiteral(red: 0.1960784314, green: 0.6235294118, blue: 0.9647058824, alpha: 1).cgColor
       case .complete:
