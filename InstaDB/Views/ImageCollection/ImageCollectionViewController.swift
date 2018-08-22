@@ -112,7 +112,7 @@ class ImageCollectionViewController: UIViewController {
   private func removeStaleProgressViews(currentProgressPaths paths: [FileService.Path]) {
     uploadProgressIndicators.filter { !paths.contains($0.key) }.forEach { path, progressView in
       uploadProgressIndicators[path] = nil
-      Timer.scheduledTimer(withTimeInterval: 1.25, repeats: false) { _ in
+      Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { _ in
         UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
           progressView.setHidden(true)
         }, completion: { _ in
