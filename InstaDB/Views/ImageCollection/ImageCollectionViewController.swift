@@ -13,7 +13,7 @@ import SwiftyDropbox
 import UIKit
 
 class ImageCollectionViewController: UIViewController {
-  private var uploadProgressIndicators = [String: UIView]()
+  private var uploadProgressIndicators = [FileService.Path: UploadProgressView]()
   private var disposeBag = DisposeBag()
   var model: ImageCollectionViewModel!
   
@@ -66,99 +66,58 @@ class ImageCollectionViewController: UIViewController {
     present(addPhotoVC, animated: false, completion: nil)
   }
   
-  // TODO: Refactor progress view into it's own UIView subclass
   private func updateFileUploadProgress(_ uploads: [FileService.Path: FileService.UploadState]) {
-    for (path, state) in uploads {
-      // Update progress indicator if present
-      let containerView: UIView
-      let progressView: UIView
-      let uploadLabel: UILabel
-      let progressLabel: UILabel
-
-      if let container = self.uploadProgressIndicators[path] {
-        containerView = container
-        progressView = containerView.subviews[0]
-        guard let upload = progressView.subviews[0] as? UILabel,
-          let progress = progressView.subviews[1] as? UILabel else { return }
-        uploadLabel = upload
-        progressLabel = progress
-        
-      // Add progress indicator if not present
-      } else {
-        containerView = UIView()
-        progressView = UIView()
-        containerView.addSubview(progressView)
-        containerView.centerXAnchor.constraint(equalTo: progressView.centerXAnchor).isActive = true
-        containerView.centerYAnchor.constraint(equalTo: progressView.centerYAnchor).isActive = true
-        containerView.heightAnchor.constraint(equalTo: progressView.heightAnchor, constant: 6).isActive = true
-        containerView.widthAnchor.constraint(equalTo: progressView.widthAnchor, constant: 8).isActive = true
-        progressView.layer.backgroundColor = #colorLiteral(red: 0.1960784314, green: 0.6235294118, blue: 0.9647058824, alpha: 1).cgColor
-        
-        progressView.layer.cornerRadius = 10
-        progressView.translatesAutoresizingMaskIntoConstraints = false
-        uploadLabel = UILabel()
-        uploadLabel.translatesAutoresizingMaskIntoConstraints = false
-        uploadLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
-        uploadLabel.textColor = .white
-        uploadLabel.lineBreakMode = .byTruncatingMiddle
-        progressLabel = UILabel()
-        progressLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
-        progressLabel.textColor = .white
-        progressLabel.translatesAutoresizingMaskIntoConstraints = false
-        progressView.addSubview(uploadLabel)
-        progressView.addSubview(progressLabel)
-        uploadLabel.leadingAnchor.constraint(equalTo: progressView.leadingAnchor, constant: 8).isActive = true
-        progressLabel.leadingAnchor.constraint(equalTo: uploadLabel.trailingAnchor, constant: 8).isActive = true
-        progressView.trailingAnchor.constraint(equalTo: progressLabel.trailingAnchor, constant: 8).isActive = true
-        progressLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        uploadLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-        progressLabel.firstBaselineAnchor.constraint(equalTo: uploadLabel.firstBaselineAnchor).isActive = true
-        uploadLabel.centerYAnchor.constraint(equalTo: progressView.centerYAnchor).isActive = true
-        progressView.heightAnchor.constraint(equalTo: uploadLabel.heightAnchor, constant: 12).isActive = true
-        progressView.isHidden = true
-        progressView.alpha = 0
-        self.uploadProgressIndicators[path] = containerView
-        self.stackView.insertArrangedSubview(containerView, at: self.stackView.arrangedSubviews.count - 1)
-        UIView.animate(withDuration: 0.25) {
-          progressView.alpha = 1
-          progressView.isHidden = false
-        }
-      }
-      
-      // TODO: Move text manipulation and color selection into View Model
-      switch state {
-      case let .uploading(progress):
-        uploadLabel.text = "Uploading: \(path)"
-        let progress = Int(progress * 100)
-        let progressText = progress == 100 ? "Verifying..." : "\(progress)%"
-        progressLabel.text = progressText
-        progressView.layer.backgroundColor = #colorLiteral(red: 0.1960784314, green: 0.6235294118, blue: 0.9647058824, alpha: 1).cgColor
-      case .complete:
-        uploadLabel.text = "Uploading: \(path)"
-        progressLabel.text = "Complete"
-        progressView.layer.backgroundColor = #colorLiteral(red: 0.1098039216, green: 0.7333333333, blue: 0.2823529412, alpha: 1).cgColor
-      case let .error(error):
-        uploadLabel.text = error
-        uploadLabel.numberOfLines = 0
-        uploadLabel.lineBreakMode = .byWordWrapping
-        progressLabel.text = nil
-        progressView.layer.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.09803921569, blue: 0.1294117647, alpha: 1).cgColor
-      }
+    uploads.forEach { path, state in
+      let view = getOrGenerateProgressView(for: path)
+      update(view, with: path, state: state)
     }
     
-    // Remove any progress indicators which are no longer in use
-    uploadProgressIndicators.forEach { path, containerView in
-      if !uploads.keys.contains(path) {
-        uploadProgressIndicators[path] = nil
-        Timer.scheduledTimer(withTimeInterval: 1.25, repeats: false) { _ in
-          self.model.loadImages.onNext(())
-          UIView.animate(withDuration: 0.5, animations: {
-            containerView.isHidden = true
-            containerView.alpha = 0
-          }, completion: { _ in
-            containerView.removeFromSuperview()
-          })
-        }
+    removeStaleProgressViews(currentProgressPaths: uploads.keys.map { $0 })
+  }
+  
+  private func getOrGenerateProgressView(for path: FileService.Path) -> UploadProgressView {
+    if let progressView = uploadProgressIndicators[path] {
+      return progressView
+    } else {
+      let progressView = UploadProgressView()
+      uploadProgressIndicators[path] = progressView
+      progressView.setHidden(true)
+      stackView.insertArrangedSubview(progressView, at: stackView.arrangedSubviews.count - 1)
+      UIView.animate(withDuration: 0.25) {
+        progressView.setHidden(false)
+      }
+      return progressView
+    }
+  }
+  
+  private func update(_ view: UploadProgressView, with path: FileService.Path, state: FileService.UploadState) {
+    switch state {
+    case let .uploading(progress):
+      view.label = "Uploading: \(path)"
+      let progress = Int(progress * 100)
+      let progressText = progress == 100 ? "Verifying..." : "\(progress)%"
+      view.subLabel = progressText
+      view.color = #colorLiteral(red: 0.1960784314, green: 0.6235294118, blue: 0.9647058824, alpha: 1)
+    case .complete:
+      view.label = "Uploading: \(path)"
+      view.subLabel = "Complete"
+      view.color = #colorLiteral(red: 0.1098039216, green: 0.7333333333, blue: 0.2823529412, alpha: 1)
+    case let .error(error):
+      view.label = error
+      view.subLabel = nil
+      view.color = #colorLiteral(red: 0.8745098039, green: 0.09803921569, blue: 0.1294117647, alpha: 1)
+    }
+  }
+  
+  private func removeStaleProgressViews(currentProgressPaths paths: [FileService.Path]) {
+    uploadProgressIndicators.filter { !paths.contains($0.key) }.forEach { path, progressView in
+      uploadProgressIndicators[path] = nil
+      Timer.scheduledTimer(withTimeInterval: 1.25, repeats: false) { _ in
+        UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
+          progressView.setHidden(true)
+        }, completion: { _ in
+          progressView.removeFromSuperview()
+        })
       }
     }
   }
