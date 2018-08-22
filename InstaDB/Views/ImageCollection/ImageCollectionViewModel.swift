@@ -16,6 +16,7 @@ class ImageCollectionViewModel {
   let fileUploadProgress: Observable<[FileService.Path: FileService.UploadState]>
   let imageSize = BehaviorSubject<CGFloat>(value: 125)
   let imageSizeObserver: AnyObserver<Int>
+  let delete: AnyObserver<Image>
 
   init(_ fileService: FileService = FileService()) {
     let reloadImagesSubject = PublishSubject<()>()
@@ -23,6 +24,16 @@ class ImageCollectionViewModel {
 
     let imageSizeObserverSubject = PublishSubject<Int>()
     imageSizeObserver = imageSizeObserverSubject.asObserver()
+    
+    let deleteSubject = PublishSubject<Image>()
+    delete = deleteSubject.asObserver()
+    
+    deleteSubject.subscribe { event in
+      guard case let .next(image) = event, let path = image.path else { return }
+      fileService.delete(path) { _ in
+        reloadImagesSubject.onNext(())
+      }
+    }.disposed(by: disposeBag)
 
     fileUploadProgress = Observable<[FileService.Path: FileService.UploadState]>.create { observer in
       let handle = fileService.listenForFileUploadChanges { changes in

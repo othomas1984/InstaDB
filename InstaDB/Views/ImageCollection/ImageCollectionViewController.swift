@@ -39,6 +39,16 @@ class ImageCollectionViewController: UIViewController {
       self.updateFileUploadProgress(uploads)
     }.disposed(by: disposeBag)
     sizeSegmentedControl.rx.value.bind(to: model.imageSizeObserver).disposed(by: disposeBag)
+    imageCollectionView.rx.modelSelected(Image.self).bind { [unowned self] image in
+      let ac = UIAlertController(title: "Delete Image?", message: nil, preferredStyle: .alert)
+      ac.addAction(UIAlertAction(title: "Delete", style: .destructive) { _ in
+        self.model.delete.onNext(image)
+      })
+      let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+      ac.addAction(cancelAction)
+      ac.preferredAction = cancelAction
+      self.present(ac, animated: true)
+    }.disposed(by: disposeBag)
   }
   
   override func viewDidAppear(_ animated: Bool) {
