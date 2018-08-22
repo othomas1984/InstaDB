@@ -10,52 +10,43 @@ import Photos
 import UIKit
 
 class AddPhotoViewController: UIViewController {
-  var firstLoad = true
-  override func viewDidLoad() {
-    super.viewDidLoad()
-  }
+  private var firstLoad = true
   
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     if firstLoad, UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+      firstLoad = false
       let picker = UIImagePickerController()
       picker.delegate = self
-      present(picker, animated: true) { self.firstLoad = false }
+      present(picker, animated: true)
     }
   }
   
-  private func upload(_ data: Data, forFileName fileName: String) {
-    guard let newName = timeStamped(fileName: fileName) else { return }
-    FileService().upload(data, toPath: "/" + newName)
+  private func upload(_ data: Data) {
+    FileService().upload(data, toPath: "/" + timeStampFilename())
   }
   
-  private func timeStamped(fileName: String) -> String? {
-    guard fileName.contains(".") else { return nil }
-    return String(Int(Date().timeIntervalSince1970)) + "_" + fileName
+  private func timeStampFilename() -> String {
+    return String(Int(Date().timeIntervalSince1970)) + ".jpg"
   }
 }
 
 extension AddPhotoViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
   func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-    dismiss(animated: true) {
-      self.dismiss(animated: false, completion: nil)
-    }
+    dismiss(animated: true) { self.dismiss(animated: false) }
   }
+  
   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]) {
-    dismiss(animated: true) {
-      self.dismiss(animated: false) {
-        if #available(iOS 11.0, *) {
-          if let imageUrl = info[UIImagePickerControllerImageURL] as? URL,
-            let imageData = try? Data.init(contentsOf: imageUrl) {
-            self.upload(imageData, forFileName: "upload.jpg")
-          }
-        } else {
-          if let image = info[UIImagePickerControllerOriginalImage] as? UIImage,
-            let imageData = UIImageJPEGRepresentation(image, 1.0) {
-            self.upload(imageData, forFileName: "upload.jpg")
-          }
-        }
-      }
+    var data: Data?
+    if #available(iOS 11.0, *),
+      let imageUrl = info[UIImagePickerControllerImageURL] as? URL,
+      let imageData = try? Data(contentsOf: imageUrl) {
+      data = imageData
+    } else if let image = info[UIImagePickerControllerOriginalImage] as? UIImage,
+      let imageData = UIImageJPEGRepresentation(image, 1.0) {
+      data = imageData
     }
+    data.map { upload($0) }
+    dismiss(animated: true) { self.dismiss(animated: false) }
   }
 }

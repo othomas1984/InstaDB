@@ -8,17 +8,19 @@
 
 import RxCocoa
 import RxSwift
+// TODO: Remove SwiftyDropbox by routing calls through View Model then through FileService
 import SwiftyDropbox
 import UIKit
 
 class ImageCollectionViewController: UIViewController {
-  var disposeBag = DisposeBag()
+  private var uploadProgressIndicators = [String: UIView]()
+  private var disposeBag = DisposeBag()
   var model: ImageCollectionViewModel!
   
   @IBOutlet weak var sizeSegmentedControl: UISegmentedControl!
   @IBOutlet weak var stackView: UIStackView!
   @IBOutlet weak var imageCollectionView: UICollectionView!
-  var uploadProgressIndicators = [String: UIView]()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     imageCollectionView.delegate = self
@@ -122,16 +124,19 @@ class ImageCollectionViewController: UIViewController {
           progressView.isHidden = false
         }
       }
+      
+      // TODO: Move text manipulation and color selection into View Model
       switch state {
       case let .uploading(progress):
         uploadLabel.text = "Uploading: \(path)"
-        progressLabel.text = "\(Int(progress * 100))%"
+        let progress = Int(progress * 100)
+        let progressText = progress == 100 ? "Verifying..." : "\(progress)%"
+        progressLabel.text = progressText
         progressView.layer.backgroundColor = #colorLiteral(red: 0.1960784314, green: 0.6235294118, blue: 0.9647058824, alpha: 1).cgColor
       case .complete:
         uploadLabel.text = "Uploading: \(path)"
         progressLabel.text = "Complete"
         progressView.layer.backgroundColor = #colorLiteral(red: 0.1098039216, green: 0.7333333333, blue: 0.2823529412, alpha: 1).cgColor
-        model.loadImages.onNext(())
       case let .error(error):
         uploadLabel.text = error
         uploadLabel.numberOfLines = 0
@@ -141,11 +146,12 @@ class ImageCollectionViewController: UIViewController {
       }
     }
     
-    // Remove any progress indicators which are no longer needed
-    self.uploadProgressIndicators.forEach { path, containerView in
+    // Remove any progress indicators which are no longer in use
+    uploadProgressIndicators.forEach { path, containerView in
       if !uploads.keys.contains(path) {
-        self.uploadProgressIndicators[path] = nil
-        Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { _ in
+        uploadProgressIndicators[path] = nil
+        Timer.scheduledTimer(withTimeInterval: 1.25, repeats: false) { _ in
+          self.model.loadImages.onNext(())
           UIView.animate(withDuration: 0.5, animations: {
             containerView.isHidden = true
             containerView.alpha = 0
@@ -159,9 +165,9 @@ class ImageCollectionViewController: UIViewController {
 }
 
 extension ImageCollectionViewController: UICollectionViewDelegateFlowLayout {
-  var itemSpacing: CGFloat { return 1 }
-  var insetSpacing: CGFloat { return 0 }
-  var numberOfItemsPerRow: CGFloat {
+  private var itemSpacing: CGFloat { return 1 }
+  private var insetSpacing: CGFloat { return 0 }
+  private var numberOfItemsPerRow: CGFloat {
     let intendedSize = (try? model.imageSize.value()) ?? 125
     return round(imageCollectionView.frame.width / intendedSize)
   }

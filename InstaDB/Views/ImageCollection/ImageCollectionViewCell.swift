@@ -15,9 +15,9 @@ class ImageCollectionViewCell: UICollectionViewCell {
   @IBOutlet weak var imageView: UIImageView!
   @IBOutlet weak var spinner: UIActivityIndicatorView!
   
-  let disposeBag = DisposeBag()
-  var imageDisposable: Disposable?
-  var nameDisposable: Disposable?
+  private let disposeBag = DisposeBag()
+  private var imageDisposable: Disposable?
+  private var nameDisposable: Disposable?
   
   var model: ImageCellViewModel? {
     didSet {

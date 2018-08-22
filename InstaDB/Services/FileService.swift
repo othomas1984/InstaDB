@@ -88,6 +88,7 @@ class FileService {
   }
   
   func fetchFile(atPath path: Path, progressHandler: ((Progress) -> Void)? = nil, completion: @escaping (Data?, String?) -> Void) {
+    // Return prior fetched thumbnail if available and exit
     if let file = FileService.fetchedFiles[path] {
       completion(file, nil)
       return
@@ -107,13 +108,8 @@ class FileService {
   }
   
   func upload(_ data: Data, toPath path: Path, progressHandler: ((Progress) -> Void)? = nil, completion: ((String?) -> Void)? = nil) {
-    // TODO: Return the UploadRequest so it can be cancelled if necessary
     updateProgress(path: path, state: .uploading(progress: 0))
     _ = FileService.client?.files.upload(path: path, input: data).response { _, error in
-      // TODO: Check documentation to see if Files.FileMetaData in response has something
-      // useful on an upload request. If so, do something useful with it.
-      
-      // TODO: Post upload errors to FileService.uploads to notify user of upload failures
       if let error = error {
         self.updateProgress(path: path, state: .error(error: error.errorDescription))
         self.removeUpload(path: path)
@@ -153,6 +149,7 @@ class FileService {
     NotificationCenter.default.addObserver(self, selector: #selector(authCancel), name: .dropboxAuthCancel, object: nil)
     NotificationCenter.default.addObserver(self, selector: #selector(authError(_:)), name: .dropboxAuthError, object: nil)
   }
+  
   @objc private func authSuccess() { notifyAuthListeners() }
   @objc private func authCancel() { signOut() }
   @objc private func authError(_ notification: Notification) { signOut() }

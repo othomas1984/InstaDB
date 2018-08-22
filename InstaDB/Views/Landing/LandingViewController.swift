@@ -7,12 +7,13 @@
 //
 
 import RxSwift
+// TODO: Remove SwiftyDropbox by routing calls through View Model then through FileService
 import SwiftyDropbox
 import UIKit
 
 class LandingViewController: UIViewController {
+  private var disposeBag = DisposeBag()
   var model: LandingViewModel!
-  var disposeBag = DisposeBag()
   
   @IBOutlet weak var spinner: UIActivityIndicatorView!
   
