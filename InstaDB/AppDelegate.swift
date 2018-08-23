@@ -15,7 +15,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(_ application: UIApplication,
                    didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?
     ) -> Bool {
+    // Set window background to white as it is seen behind some translucent UI elements
     window?.backgroundColor = .white
+    
+    // Setup FileService with Dropbox API Key
     FileService.setup(apiKey: "kv804kipmgbpxnx")
     return true
   }
