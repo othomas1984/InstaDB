@@ -140,8 +140,8 @@
 		336638CB2128DC9200FC141A /* AddPhoto */ = {
 			isa = PBXGroup;
 			children = (
-				336638CC2128DCA800FC141A /* AddPhoto.storyboard */,
 				336638CE2128DD7000FC141A /* AddPhotoViewController.swift */,
+				336638CC2128DCA800FC141A /* AddPhoto.storyboard */,
 			);
 			path = AddPhoto;
 			sourceTree = "<group>";
