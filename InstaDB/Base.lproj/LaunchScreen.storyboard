@@ -1,7 +1,14 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" systemVersion="17A277" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina5_5" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -11,15 +18,67 @@
             <objects>
                 <viewController id="01J-lp-oVM" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X9x-A5-sCE">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="368"/>
+                                <color key="backgroundColor" red="0.99215686274509807" green="0.50196078431372548" blue="0.21176470588235294" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ecb-Ij-xDY">
+                                <rect key="frame" x="0.0" y="368" width="414" height="368"/>
+                                <color key="backgroundColor" red="0.9882352941176471" green="0.19607843137254902" blue="0.49803921568627452" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Launch" translatesAutoresizingMaskIntoConstraints="NO" id="dFl-dl-ioE">
+                                <rect key="frame" x="0.0" y="81.666666666666657" width="414" height="441.66666666666674"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="Dropbox" translatesAutoresizingMaskIntoConstraints="NO" id="A1S-sG-hpz">
+                                <rect key="frame" x="48.666666666666657" y="585.33333333333337" width="317" height="150.66666666666663"/>
+                                <color key="backgroundColor" red="0.97647058823529409" green="0.21568627450980393" blue="0.50196078431372548" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Welcome to InstaDB" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UZQ-cg-d1Z">
+                                <rect key="frame" x="127.33333333333331" y="531.33333333333337" width="161" height="20.333333333333371"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Powered By" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="egO-Hg-cbr">
+                                <rect key="frame" x="166.66666666666666" y="559.33333333333337" width="81" height="18"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="X9x-A5-sCE" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="6X2-0c-Dj7"/>
+                            <constraint firstItem="A1S-sG-hpz" firstAttribute="top" secondItem="egO-Hg-cbr" secondAttribute="bottom" constant="8" id="8ep-r0-SEt"/>
+                            <constraint firstItem="egO-Hg-cbr" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="9VV-CJ-MtN"/>
+                            <constraint firstAttribute="trailing" secondItem="X9x-A5-sCE" secondAttribute="trailing" id="9gl-L7-bpP"/>
+                            <constraint firstItem="UZQ-cg-d1Z" firstAttribute="top" secondItem="dFl-dl-ioE" secondAttribute="bottom" constant="8" symbolic="YES" id="BbQ-v8-3eL"/>
+                            <constraint firstItem="dFl-dl-ioE" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerYWithinMargins" multiplier="0.8" id="L0W-o6-45t"/>
+                            <constraint firstItem="X9x-A5-sCE" firstAttribute="height" secondItem="Ze5-6b-2t3" secondAttribute="height" multiplier="0.5" id="Nqd-mL-yC0"/>
+                            <constraint firstItem="ecb-Ij-xDY" firstAttribute="height" secondItem="Ze5-6b-2t3" secondAttribute="height" multiplier="0.5" id="Par-I6-oLC"/>
+                            <constraint firstItem="X9x-A5-sCE" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="R8O-R9-nWC"/>
+                            <constraint firstAttribute="trailing" secondItem="ecb-Ij-xDY" secondAttribute="trailing" id="Wir-Ma-FnU"/>
+                            <constraint firstAttribute="bottom" secondItem="ecb-Ij-xDY" secondAttribute="bottom" id="XNk-xr-vuO"/>
+                            <constraint firstItem="ecb-Ij-xDY" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="cJ8-d6-ZdB"/>
+                            <constraint firstItem="dFl-dl-ioE" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerXWithinMargins" id="kXU-pg-Qdn"/>
+                            <constraint firstItem="egO-Hg-cbr" firstAttribute="top" secondItem="UZQ-cg-d1Z" secondAttribute="bottom" constant="7.6666666666666288" id="l5q-KG-nNt"/>
+                            <constraint firstItem="dFl-dl-ioE" firstAttribute="height" secondItem="Ze5-6b-2t3" secondAttribute="height" multiplier="0.6" id="me9-cZ-ETh"/>
+                            <constraint firstItem="UZQ-cg-d1Z" firstAttribute="centerX" secondItem="dFl-dl-ioE" secondAttribute="centerX" id="o9H-N2-O6l"/>
+                            <constraint firstItem="dFl-dl-ioE" firstAttribute="width" secondItem="Ze5-6b-2t3" secondAttribute="width" id="rNv-nd-exi"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="A1S-sG-hpz" secondAttribute="bottom" id="wUJ-Kn-ZgK"/>
+                            <constraint firstItem="A1S-sG-hpz" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerXWithinMargins" id="yfJ-BY-aSM"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="50.724637681159422" y="374.18478260869568"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Dropbox" width="317" height="128"/>
+        <image name="Launch" width="426" height="341"/>
+    </resources>
 </document>
