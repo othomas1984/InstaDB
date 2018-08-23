@@ -18,14 +18,15 @@ class LandingViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     model = LandingViewModel()
-    handleAuthChange()
+    setupAuthChangeBinding()
   }
   
   @IBAction func dropboxButtonTapped() {
     FileService.authenticate(from: self)
   }
   
-  private func handleAuthChange() {
+  private func setupAuthChangeBinding() {
+    // On auth change, if authenticated, replace view controller with Image Collection
     model.authenticated.subscribe { [unowned self] event in
       guard case let .next(state) = event,
       case .authenticated = state else { return }
