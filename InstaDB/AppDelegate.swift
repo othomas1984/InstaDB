@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                    didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?
     ) -> Bool {
     window?.backgroundColor = .white
-    FileService.setup()
+    FileService.setup(apiKey: "kv804kipmgbpxnx")
     return true
   }
 

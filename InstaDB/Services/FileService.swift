@@ -14,8 +14,8 @@ class FileService {
   typealias Path = String
   typealias Progress = Double
   
-  static func setup() {
-    DropboxClientsManager.setupWithAppKey("kv804kipmgbpxnx")
+  static func setup(apiKey: String) {
+    DropboxClientsManager.setupWithAppKey(apiKey)
   }
   
   private static var client: DropboxClient? {
