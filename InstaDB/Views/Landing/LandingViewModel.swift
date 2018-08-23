@@ -13,7 +13,7 @@ class LandingViewModel {
   private let fileService: FileService
   let authenticated: Observable<FileService.AuthState>
   
-  init(delegate: ViewModelDelegate? = nil, fileService: FileService = FileService()) {
+  init(fileService: FileService = FileService()) {
     self.fileService = fileService
     let authChange = Observable<FileService.AuthState>.create { observer in
       let handle = fileService.listenForAuthChanges { change in

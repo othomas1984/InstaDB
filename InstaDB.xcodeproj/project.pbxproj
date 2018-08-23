@@ -12,8 +12,6 @@
 		336638B12127986F00FC141A /* LandingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336638B02127986F00FC141A /* LandingViewController.swift */; };
 		336638B32127987500FC141A /* Landing.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 336638B22127987500FC141A /* Landing.storyboard */; };
 		336638B62127A1FE00FC141A /* FileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336638B52127A1FE00FC141A /* FileService.swift */; };
-		336638B92127A58600FC141A /* NotificationNameExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336638B82127A58600FC141A /* NotificationNameExtension.swift */; };
-		336638BB2127B28900FC141A /* ViewModelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336638BA2127B28900FC141A /* ViewModelDelegate.swift */; };
 		336638BE21289F3B00FC141A /* ImageCollection.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 336638BD21289F3B00FC141A /* ImageCollection.storyboard */; };
 		336638C021289FD400FC141A /* ImageCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336638BF21289FD400FC141A /* ImageCollectionViewController.swift */; };
 		336638C22128A08800FC141A /* ImageCollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336638C12128A08800FC141A /* ImageCollectionViewModel.swift */; };
@@ -35,8 +33,6 @@
 		336638B02127986F00FC141A /* LandingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingViewController.swift; sourceTree = "<group>"; };
 		336638B22127987500FC141A /* Landing.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Landing.storyboard; sourceTree = "<group>"; };
 		336638B52127A1FE00FC141A /* FileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileService.swift; sourceTree = "<group>"; };
-		336638B82127A58600FC141A /* NotificationNameExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNameExtension.swift; sourceTree = "<group>"; };
-		336638BA2127B28900FC141A /* ViewModelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelDelegate.swift; sourceTree = "<group>"; };
 		336638BD21289F3B00FC141A /* ImageCollection.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ImageCollection.storyboard; sourceTree = "<group>"; };
 		336638BF21289FD400FC141A /* ImageCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewController.swift; sourceTree = "<group>"; };
 		336638C12128A08800FC141A /* ImageCollectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewModel.swift; sourceTree = "<group>"; };
@@ -95,7 +91,6 @@
 		336638AC2127980300FC141A /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				336638BA2127B28900FC141A /* ViewModelDelegate.swift */,
 				336638AD2127983F00FC141A /* Landing */,
 				336638BC21289F2500FC141A /* ImageCollection */,
 				336638CB2128DC9200FC141A /* AddPhoto */,
@@ -124,7 +119,6 @@
 		336638B72127A57500FC141A /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				336638B82127A58600FC141A /* NotificationNameExtension.swift */,
 				336638C92128B29700FC141A /* CallErrorExtension.swift */,
 			);
 			path = Extensions;
@@ -319,9 +313,7 @@
 				336638AF2127986500FC141A /* LandingViewModel.swift in Sources */,
 				336638B12127986F00FC141A /* LandingViewController.swift in Sources */,
 				336638C22128A08800FC141A /* ImageCollectionViewModel.swift in Sources */,
-				336638BB2127B28900FC141A /* ViewModelDelegate.swift in Sources */,
 				336638C021289FD400FC141A /* ImageCollectionViewController.swift in Sources */,
-				336638B92127A58600FC141A /* NotificationNameExtension.swift in Sources */,
 				336638B62127A1FE00FC141A /* FileService.swift in Sources */,
 				33A380ED21277DCB00EFB043 /* AppDelegate.swift in Sources */,
 				3325F404212DE8FF00EF8739 /* UploadProgressView.swift in Sources */,
