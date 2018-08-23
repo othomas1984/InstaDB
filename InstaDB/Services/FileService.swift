@@ -23,7 +23,7 @@ class FileService {
   }
   
   // MARK: - File Manipulation
-  // TODO: Switch to NSCache for better caching
+  // TODO: Switch to NSCache for persistant caching
   private static var fetchedFiles = [Path: Data]()
   private static var fetchedThumbnails = [Path: Data]()
   
@@ -50,10 +50,7 @@ class FileService {
       completion(file, nil)
     }
     FileService.client?.files.getThumbnail(path: path, format: .png, size: .w640h480, mode: .fitoneBestfit).response { response, error in
-      if let error = error {
-        completion(nil, error.errorDescription)
-        return
-      }
+      guard error == nil else { completion(nil, error?.errorDescription); return }
       let data = response?.1
       FileService.fetchedThumbnails[path] = data
       completion(data, nil)
@@ -70,10 +67,7 @@ class FileService {
       return
     }
     FileService.client?.files.download(path: path).response { response, error in
-      if let error = error {
-        completion(nil, error.errorDescription)
-        return
-      }
+      guard error == nil else { completion(nil, error?.errorDescription); return }
       let data = response?.1
       FileService.fetchedFiles[path] = data
       completion(data, nil)
@@ -102,15 +96,12 @@ class FileService {
     }
   }
   
-  func delete(_ path: Path, completion: ((String?) -> Void)? = nil) {
+  func delete(_ path: Path, completion: @escaping ((String?) -> Void)) {
     FileService.client?.files.deleteV2(path: path).response { _, error in
-      if let error = error {
-        completion?(error.errorDescription)
-        return
-      }
+      guard error == nil else { completion(error?.errorDescription); return }
       FileService.fetchedFiles[path.lowercased()] = nil
       FileService.fetchedThumbnails[path.lowercased()] = nil
-      completion?(nil)
+      completion(nil)
     }
   }
   
