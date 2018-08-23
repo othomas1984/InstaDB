@@ -35,13 +35,13 @@ class UploadProgressView: UIView {
     // Position mainLabel
     mainLabel.leadingAnchor.constraint(equalTo: outline.leadingAnchor, constant: 8).isActive = true
     mainLabel.centerYAnchor.constraint(equalTo: outline.centerYAnchor).isActive = true
-    mainLabel.leadingAnchor.constraint(equalTo: secondaryLabel.trailingAnchor, constant: -8).isActive = true
+    mainLabel.trailingAnchor.constraint(equalTo: secondaryLabel.leadingAnchor, constant: -8).isActive = true
     mainLabel.heightAnchor.constraint(equalTo: outline.heightAnchor, constant: -12).isActive = true
     mainLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
     // Position sublabel
     secondaryLabel.trailingAnchor.constraint(equalTo: outline.trailingAnchor, constant: -8).isActive = true
-    secondaryLabel.firstBaselineAnchor.constraint(equalTo: mainLabel.firstBaselineAnchor).isActive = true
+    secondaryLabel.centerYAnchor.constraint(equalTo: mainLabel.centerYAnchor).isActive = true
     secondaryLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
     // Style border
