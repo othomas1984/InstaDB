@@ -10,12 +10,11 @@ import RxSwift
 
 class LandingViewModel {
   private let disposeBag = DisposeBag()
-  private let fileService: FileService
   let authenticated: Observable<FileService.AuthState>
   
   init(fileService: FileService = FileService()) {
-    self.fileService = fileService
-    let authChange = Observable<FileService.AuthState>.create { observer in
+    // Create an observable to send events any time the authentication state changes
+    authenticated = Observable<FileService.AuthState>.create { observer in
       let handle = fileService.listenForAuthChanges { change in
         observer.onNext(change)
       }
@@ -23,6 +22,5 @@ class LandingViewModel {
         fileService.removeAuth(handle: handle)
       }
     }.startWith(fileService.authState).share()
-    authenticated = authChange.asObservable()
   }
 }
