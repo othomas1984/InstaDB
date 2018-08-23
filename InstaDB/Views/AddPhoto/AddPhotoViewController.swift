@@ -13,6 +13,7 @@ class AddPhotoViewController: UIViewController {
   
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
+    // Only show image picker on first load
     if firstLoad, UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
       firstLoad = false
       let picker = UIImagePickerController()
@@ -37,6 +38,7 @@ extension AddPhotoViewController: UIImagePickerControllerDelegate & UINavigation
   
   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]) {
     var data: Data?
+    // Use new UIImagePickerControllerImageURL if on iOS 11, otherwise UIImagePickerControllerOriginalImage
     if #available(iOS 11.0, *),
       let imageUrl = info[UIImagePickerControllerImageURL] as? URL,
       let imageData = try? Data(contentsOf: imageUrl) {
