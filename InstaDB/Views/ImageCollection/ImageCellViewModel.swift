@@ -14,11 +14,14 @@ class ImageCellViewModel {
   
   init(_ inputImage: Image, fileService: FileService = FileService()) {
     let downloadProgressSubject = PublishSubject<Double>()
+    
+    // Convert download progress Doubles into readable labels and create observable to update UI
     downloadProgressLabel = downloadProgressSubject
       .startWith(0)
       .map { "Loading: \(Int($0 * 100))%" }
       .asObservable()
     
+    // Create observable to send an event with image Data once the fetchThumbnail method returns
     image = Observable<Data>.create { observer in
       if let path = inputImage.path {
         fileService.fetchThumbnail(atPath: path, progressHandler: downloadProgressSubject.onNext) { imageData, errorDescription in
