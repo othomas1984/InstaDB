@@ -8,7 +8,6 @@
 
 import RxCocoa
 import RxSwift
-import UIKit
 
 class ImageCollectionViewController: UIViewController {
   private var uploadProgressIndicators = [FileService.Path: UploadProgressView]()
@@ -81,7 +80,6 @@ class ImageCollectionViewController: UIViewController {
       let view = getOrGenerateProgressView(for: path)
       update(view, with: path, state: state)
     }
-    
     removeStaleProgressViews(currentProgressPaths: uploads.keys.map { $0 })
   }
   

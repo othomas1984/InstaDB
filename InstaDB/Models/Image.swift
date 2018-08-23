@@ -6,8 +6,6 @@
 //  Copyright © 2018 SwiftCoders. All rights reserved.
 //
 
-import Foundation
-
 struct Image {
   let name: String
   let path: String?

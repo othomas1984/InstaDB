@@ -8,7 +8,6 @@
 
 import RxCocoa
 import RxSwift
-import UIKit
 
 class LandingViewController: UIViewController {
   private var disposeBag = DisposeBag()

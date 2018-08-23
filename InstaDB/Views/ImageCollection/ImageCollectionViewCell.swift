@@ -8,7 +8,6 @@
 
 import RxCocoa
 import RxSwift
-import UIKit
 
 class ImageCollectionViewCell: UICollectionViewCell {
   @IBOutlet weak var label: UILabel!

@@ -6,8 +6,6 @@
 //  Copyright © 2018 SwiftCoders. All rights reserved.
 //
 
-import Foundation
-
 enum ViewModelAction {
   case dismiss
   case show(type: String?, id: String?)
