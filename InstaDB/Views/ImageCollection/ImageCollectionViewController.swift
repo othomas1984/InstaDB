@@ -21,23 +21,76 @@ class ImageCollectionViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    setupImageCollectionView()
+    setupRefreshControl()
+    setupBindings()
+  }
+  
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    model.loadImages.onNext(())
+  }
+  
+  override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    coordinator.animate(alongsideTransition: nil) { _ in
+      self.imageCollectionView.reloadData()
+    }
+  }
+  
+  private func setupImageCollectionView() {
     imageCollectionView.delegate = self
-    model.images
-      .bind(to: imageCollectionView.rx
-        .items(cellIdentifier: "imageCell")) { _, image, cell in
-          if let imageCell = cell as? ImageCollectionViewCell {
-            imageCell.model = ImageCellViewModel(image)
-          }
-      }.disposed(by: disposeBag)
+  }
+  
+  private func setupRefreshControl() {
     let refreshControl = UIRefreshControl()
     imageCollectionView.refreshControl = refreshControl
+  }
+  
+  private func setupBindings() {
+    setupImageListChangeBinding(imageCollectionView.refreshControl)
+    setupRefreshControlBinding(imageCollectionView.refreshControl)
+    setupFileUploadBinding()
+    setupSegmentControlBinding()
+    setupCollectionViewSelectionBinding()
+  }
+  
+  private func setupImageListChangeBinding(_ refreshControl: UIRefreshControl?) {
+    // Provides datasource for collection view
+    model.images.bind(to: imageCollectionView.rx
+      .items(cellIdentifier: "imageCell")) { _, image, cell in
+        if let imageCell = cell as? ImageCollectionViewCell {
+          imageCell.model = ImageCellViewModel(image)
+        }
+    }.disposed(by: disposeBag)
+    
+    // Show welcome view if no images have been uploaded
     model.images.map { !$0.isEmpty }.startWith(true).bind(to: welcomeView.rx.isHidden).disposed(by: disposeBag)
-    model.images.map { _ in false }.bind(to: refreshControl.rx.isRefreshing).disposed(by: disposeBag)
-    refreshControl.rx.controlEvent(.valueChanged).bind(to: model.loadImages).disposed(by: disposeBag)
+    
+    // Stop refreshing refresh control when images load
+    refreshControl.map {
+      model.images.map { _ in false }.bind(to: $0.rx.isRefreshing).disposed(by: disposeBag)
+    }
+  }
+  
+  private func setupRefreshControlBinding(_ refreshControl: UIRefreshControl?) {
+    // Load images when refresh control is activated
+    refreshControl?.rx.controlEvent(.valueChanged).bind(to: model.loadImages).disposed(by: disposeBag)
+  }
+  
+  private func setupFileUploadBinding() {
+    // Update file progress view(s) when upload progress changes
     model.fileUploadProgress.bind { [unowned self] uploads in
       self.updateFileUploadProgress(uploads)
     }.disposed(by: disposeBag)
+  }
+  
+  private func setupSegmentControlBinding() {
+    // Update image size value when segmented control changed
     sizeSegmentedControl.rx.value.bind(to: model.imageSizeObserver).disposed(by: disposeBag)
+  }
+  
+  private func setupCollectionViewSelectionBinding() {
+    // Present alert controller for image deletion when a cell is selected
     imageCollectionView.rx.modelSelected(Image.self).bind { [unowned self] image in
       let ac = UIAlertController(title: "Delete Image?", message: nil, preferredStyle: .alert)
       ac.addAction(UIAlertAction(title: "Delete", style: .destructive) { _ in
@@ -50,19 +103,9 @@ class ImageCollectionViewController: UIViewController {
     }.disposed(by: disposeBag)
   }
   
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
-    model.loadImages.onNext(())
-  }
-
-  override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-    coordinator.animate(alongsideTransition: nil) { _ in
-      self.imageCollectionView.reloadData()
-    }
-  }
-  
   @IBAction func signOutTapped(_ sender: Any) {
     FileService.signOut()
+    // Replace current view controller with the landing view
     guard let landingVC = UIStoryboard.init(name: "Landing", bundle: nil).instantiateInitialViewController(),
     let window = UIApplication.shared.keyWindow else { return }
     UIView.transition(with: window, duration: 0.5, options: [.transitionFlipFromLeft], animations: {
@@ -84,8 +127,11 @@ class ImageCollectionViewController: UIViewController {
   }
   
   private func getOrGenerateProgressView(for path: FileService.Path) -> UploadProgressView {
+    // Return existing progress view if there is one
     if let progressView = uploadProgressIndicators[path] {
       return progressView
+      
+    // Otherwise generate a new one, save it, and return it
     } else {
       let progressView = UploadProgressView()
       uploadProgressIndicators[path] = progressView
@@ -118,8 +164,12 @@ class ImageCollectionViewController: UIViewController {
   }
   
   private func removeStaleProgressViews(currentProgressPaths paths: [FileService.Path]) {
+    // Filter for views that are no longer contained in the list of file paths being uploaded
     uploadProgressIndicators.filter { !paths.contains($0.key) }.forEach { path, progressView in
+      // Remove file path from list so it is no longer updated, but do not remove from view until after
+      // delay and animation
       uploadProgressIndicators[path] = nil
+      // Delay so user has time to read final status
       Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { _ in
         UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
           progressView.setHidden(true)
